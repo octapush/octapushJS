@@ -51,8 +51,8 @@
                 el.forEach(function (el, idx, arr) {
                     charMode = !charMode;
 
-                    for (var i = 0; i < el; i++) {
-                        str += patternChars[charMode ? 1 : 0];
+                    for (var i = 0x0; i < el; i++) {
+                        str += patternChars[charMode ? 0x1 : 0x0];
                     }
                 });
             });
@@ -164,7 +164,7 @@
              * @returns {bool} return TRUE if the `obj` is an integer. Otherwise is FALSE.
              */
             isInteger: function (obj) {
-                return obj % 1 === 0;
+                return obj % 0x1 === 0x0;
             }
         },
         utility: {
@@ -205,7 +205,7 @@
             loop: function (nTime, func) {
                 if (!func) return;
 
-                for (var i = 0; i < nTime; i++) {
+                for (var i = 0x0; i < nTime; i++) {
                     if (func && _o_.compare.isFunction(func))
                         func(i);
                 }
