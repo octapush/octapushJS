@@ -52,54 +52,54 @@
 
             return str;
         },
-        showCopyleft: function() {
+        showCopyleft: function () {
             console.log(_o_.copyleft());
         },
         compare: {
-            isNullOrEmpty: function(obj) {
+            isNullOrEmpty: function (obj) {
                 return _o_.compare.isUndefined(obj) || null === obj || '' === obj || 0x0 === obj.length;
             },
-            isEmpty: function(obj) {
+            isEmpty: function (obj) {
                 for (name in obj) return false;
                 return true;
             },
-            isUndefined: function(obj) {
+            isUndefined: function (obj) {
                 return obj === undefined;
             },
-            isDefined: function(obj) {
+            isDefined: function (obj) {
                 return obj !== undefined;
             },
-            isNan: function(obj) {
+            isNan: function (obj) {
                 return isNaN(obj);
             },
-            isFunction: function(obj) {
+            isFunction: function (obj) {
                 return obj instanceof Function || Object.prototype.toString().call(obj) === '[object Function]';
             },
-            isString: function(obj) {
+            isString: function (obj) {
                 return obj.prototype.toString().call(obj) === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
-            isBool: function(obj) {
+            isBool: function (obj) {
                 return obj === true || obj === false || Object.prototype.toString().call(obj) === '[object Boolean]';
             },
-            isArray: function(obj) {
+            isArray: function (obj) {
                 return _o_.compare.isUndefined(obj) ? false : _o_.utility.getType(obj) === 'object' || _o_.utility.getType(obj) === 'array';
             },
-            isInteger: function(obj) {
+            isInteger: function (obj) {
                 return obj % 1 === 0;
             }
         },
         utility: {
-            noop: function () {},
-            noOperation: function () {},
             getType: function (obj) {
                 return !arguments ? null : (null === obj ? obj + '' : (typeof obj).toString());
             },
+            noop: function () {},
+            noOperation: function () {},
             ifNull: function (obj, defaultValue) {
                 return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
             },
-            loop: function(nTime, func) {
+            loop: function (nTime, func) {
                 if (!func) return;
-                
+
                 for (var i = 0; i < nTime; i++) {
                     if (func && _o_.compare.isFunction(func))
                         func(i);
