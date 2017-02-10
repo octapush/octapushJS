@@ -70,7 +70,7 @@
              * Check the object is null or not
              * 
              * @param {any} obj
-             * @returns {Boolean} returning TRUE if object is null or '' or undefined or array with length 0. Otherwise is FALSE.
+             * @returns {bool} returning TRUE if object is null or '' or undefined or array with length 0. Otherwise is FALSE.
              */
             isNullOrEmpty: function (obj) {
                 return _o_.compare.isUndefined(obj) || null === obj || '' === obj || 0x0 === obj.length;
@@ -79,7 +79,7 @@
              * 
              * Check the `obj` is having properties or not.
              * @param {object} obj
-             * @returns {Boolean} returning TRUE if there are no properties inside `obj`. Otherwise is FALSE.
+             * @returns {bool} returning TRUE if there are no properties inside `obj`. Otherwise is FALSE.
              */
             isEmpty: function (obj) {
                 for (name in obj) return false;
@@ -89,7 +89,7 @@
              * Check the `obj` is undefined or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is UNDEFINED. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is UNDEFINED. Otherwise is FALSE.
              */
             isUndefined: function (obj) {
                 return obj === undefined;
@@ -98,7 +98,7 @@
              * Check the `obj` is defined or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is DEFINED. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is DEFINED. Otherwise is FALSE.
              */
             isDefined: function (obj) {
                 return obj !== undefined;
@@ -107,7 +107,7 @@
              * Check the `obj` is a number or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return FALSE if the `obj` is NUMBER. Otherwise is TRUE.
+             * @returns {bool} return FALSE if the `obj` is NUMBER. Otherwise is TRUE.
              */
             isNan: function (obj) {
                 return isNaN(obj);
@@ -116,7 +116,7 @@
              * Check the `obj` is a number or not
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is NUMBER. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is NUMBER. Otherwise is FALSE.
              */
             isNumber: function(obj) {
                 return !isNaN(obj);
@@ -125,7 +125,7 @@
              * Check the `obj` is a JS function or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
             isFunction: function (obj) {
                 return obj instanceof Function || Object.prototype.toString().call(obj) === '[object Function]';
@@ -134,7 +134,7 @@
              * Check the `obj` is a string or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is a string. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
             isString: function (obj) {
                 return obj.prototype.toString().call(obj) === '[object String]' || _o_.utility.getType(obj) === 'string';
@@ -143,7 +143,7 @@
              * Check the `obj` is a BOOLEAN or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
             isBool: function (obj) {
                 return obj === true || obj === false || Object.prototype.toString().call(obj) === '[object Boolean]';
@@ -152,7 +152,7 @@
              * Check the `obj` is an array or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is an array. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is an array. Otherwise is FALSE.
              */
             isArray: function (obj) {
                 return _o_.compare.isUndefined(obj) ? false : _o_.utility.getType(obj) === 'object' || _o_.utility.getType(obj) === 'array';
@@ -161,7 +161,7 @@
              * Check the `obj` is an integer or not.
              * 
              * @param {any} obj
-             * @returns {Boolean} return TRUE if the `obj` is an integer. Otherwise is FALSE.
+             * @returns {bool} return TRUE if the `obj` is an integer. Otherwise is FALSE.
              */
             isInteger: function (obj) {
                 return obj % 1 === 0;
@@ -190,7 +190,7 @@
              * 
              * @param {any} obj
              * @param {any} defaultValue
-             * @returns {any} 
+             * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              */
             ifNull: function (obj, defaultValue) {
                 return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
@@ -198,7 +198,7 @@
             /**
              * Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
              * 
-             * @param {integer} nTime
+             * @param {Number} nTime
              * @param {Func} func
              * @returns -
              */
