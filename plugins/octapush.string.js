@@ -156,6 +156,33 @@
 
                         return aStr.join('');
                     })();
+            },
+            format: function (str, argue) {
+                argue = arguments;
+                return _o_.compare.isNullOrEmpty(arguments) ?
+                    null :
+                    (_o_.compare.isNullOrEmpty(argue) ?
+                        str :
+                        (function () {
+                            var formatPos = new RegExp('\{([0-' + (argue.length - 1) + '])\}', 'g');
+                            return String(str).replace(formatPos, function (key, value) {
+                                return value >= argue.length ? key : argue[value]
+                            })
+                        })()
+                    );
+            },
+
+            // TODO: UNFINISH
+            template: function (str, values, opening, closing) {
+                return _o_.compare.isNullOrEmpty(str) ?
+                    '' :
+                    _o_.compare.isNullOrEmpty(values) ? str : (function () {
+                        opening = _o_.ifNull(opening, '{{');
+                        closing = _o_.ifNull(closing, '}}');
+
+                        var open = opening.replace(/[-[\]()*\s]/g, '\\$&').replace(/\$/g, '\\$');
+                        var close = closing.replace(/[-[\]()*\s]/g, '\\$&').replace(/\$/g, '\\$');
+                    })();
             }
         };
 
