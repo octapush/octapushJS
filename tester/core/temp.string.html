@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>octapush - WRLoader</title>
+
+	<script type="text/javascript" src="../../octapush.js"></script>
+	<script type="text/javascript" src="../../plugins/octapush.string.js"></script>
+	<script type="text/javascript">
+		(function () {
+			var strFull = _o_.string.format('my name is {1} and was born at {2}.', 'fadhly', 'serang');
+			var chompLeft = _o_.string.chompLeft(strFull, 'my');
+			var chompRight = _o_.string.chompRight(strFull, 'serang');
+			var chomp = _o_.string.chomp(strFull, 'my', 'serang');
+			var pad = _o_.string.pad('Fadhly Permata', 5, '-');
+			var padLeft = _o_.string.padLeft('Fadhly Permata', 5, '-');
+			var between = _o_.string.between(strFull, 'name', 'at');
+			var template = _o_.string.template('my name is {{name}} and was born at {{bornLocation}}', {
+				name: 'Fadhly Permata',
+				bornLocation: 'Serang'
+			});
+
+			// console.log(chompLeft);
+			// console.log(chompRight);
+			// console.log(chomp);
+			// console.log(pad);
+			// console.log(padLeft);
+			// console.log(between);
+			// console.log(_o_.string.repeat('fadhly'));
+			// console.log(_o_.string.toHex(template));
+			// console.log(_o_.string.fromHex('\x6D\x79\x20\x6E\x61\x6D\x65\x20\x69\x73\x20\x46\x61\x64\x68\x6C\x79\x20\x50\x65\x72\x6D\x61\x74\x61\x20\x61\x6E\x64\x20\x77\x61\x73\x20\x62\x6F\x72\x6E\x20\x61\x74\x20\x53\x65\x72\x61\x6E\x67'));
+			//console.log(_o_.string.reverse(template));
+			console.log(_o_.string.shift(template, 1));
+		})();
+	</script>
+</head>
+
+<body>
+
+</body>
+
+</html>
