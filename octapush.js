@@ -162,6 +162,9 @@
              */
             isInteger: function (obj) {
                 return obj % 0x1 === 0x0;
+            },
+            isFloat: function(obj) {
+                return Number(obj) === obj && obj % 1 !== 0;
             }
         },
         utility: {
