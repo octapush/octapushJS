@@ -10,22 +10,20 @@
  === Contributors ===
  ... just type your name here after editing the script ...
  */
-(function () {
+(function (w) {
     'use strict';
     if (!window.octapushJS || !window._o_) {
         alert('octapushJS.pluginName has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
-        var _o_ = window._o_;
         var version = '1.7.02.11';
 
         _o_.pluginName = Object.assign(_o_.utility.ifNull(_o_.pluginName, {}), {
+            version: version
             /**
              * Write your code here using JSON style.
              */
         });
-
-        window.octapushJS = window._o_ = _o_;
     }
-})();
+})(window);

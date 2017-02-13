@@ -18,7 +18,7 @@
 
 (function (w) {
     'use strict';
-    var version = '1.7.02.11';
+    var version = '1.7.02.13';
 
     var _o_ = {
         /**
@@ -129,7 +129,7 @@
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
             isFunction: function (obj) {
-                return obj instanceof Function || _o_.utility.getType(obj) === 'function';
+                return obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}';
             },
             /**
              * @desc Check the `obj` is a string or not.
@@ -137,7 +137,7 @@
              * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
             isString: function (obj) {
-                return obj.prototype.toString().call(obj) === '[object String]' || _o_.utility.getType(obj) === 'string';
+                return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
             /**
              * @desc Check the `obj` is a BOOLEAN or not.
@@ -145,7 +145,7 @@
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
             isBool: function (obj) {
-                return obj === true || obj === false || Object.prototype.toString().call(obj) === '[object Boolean]';
+                return obj === true || obj === false || obj.__proto__ === '[object Boolean]' || _o_.utility.getType(obj) === 'boolean';
             },
             /**
              * @desc Check the `obj` is an array or not.

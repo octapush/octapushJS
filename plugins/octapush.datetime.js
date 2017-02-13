@@ -10,15 +10,14 @@
  === Contributors ===
  ... just type your name here after editing the script ...
  */
-(function () {
+(function (w) {
     'use strict';
-    if (!window.octapushJS || !window._o_) {
+    if (!w.octapushJS || !w._o_) {
         alert('octapushJS.datetime has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
-        var _o_ = window._o_;
-        var version = '1.7.02.11';
+        var version = '1.7.02.13';
 
         // BOF: LOCALIZATION 
         _o_.localization.datetime = Object.assign(_o_.utility.ifNull(_o_.localization.datetime, {}), {
@@ -200,7 +199,5 @@
                 return _o_.compare.isNullOrEmpty(dotnetDt) ? null : new Date(parseInt(dotnetDt.substring(6)));
             }
         });
-
-        window.octapushJS = window._o_ = _o_;
     }
-})();
+})(window);

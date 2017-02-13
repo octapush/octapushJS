@@ -25,14 +25,13 @@
  * - ADD parameterize())
  */
 
-(function () {
+(function (w) {
     'use strict';
-    if (!window.octapushJS || !window._o_) {
+    if (!w.octapushJS || !w._o_) {
         alert('octapushJS.ajax has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
-        var _o_ = window._o_;
         var version = '1.7.02.13';
 
         _o_.ajax = Object.assign(_o_.utility.ifNull(_o_.ajax, {}), {
@@ -157,4 +156,4 @@
             }
         });
     }
-})();
+})(window);
