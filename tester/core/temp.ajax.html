@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>octapush - WRLoader</title>
+	<script type="text/javascript" src="../../octapush.js"></script>
+	<script type="text/javascript" src="../../plugins/octapush.ajax.js"></script>
+	<script type="text/javascript">
+		(function () {
+			// _o_.ajax.request({
+			// 	url: 'https://reqres.in/api/users',
+			// 	method: 'GET',
+			// 	success: function (xhr) {
+			// 		console.log(xhr.responseText);
+			// 	},
+			// 	error: function (xhr) {
+			// 		console.log(xhr);
+			// 	}
+			// });
+
+			_o_.ajax.post(
+				'http://html5rocks-cors.s3-website-us-east-1.amazonaws.com/index.html',
+				null,
+				function (xhr) {console.log(xhr.responseText);},
+				function (xhr) {console.log(xhr);}
+			);
+
+			_o_.ajax.get(
+				'https://reqres.in/api/users',
+				null,
+				function (xhr) {console.log(xhr.responseText);},
+				function (xhr) {console.log(xhr);}
+			);
+
+			// _o_.ajax.post(
+			// 	'https://reqres.in/api/users',
+			// 	{
+			// 		"name": "morpheus",
+			// 		"job": "leader"
+			// 	},
+			// 	function (xhr) {console.log(xhr.responseText);},
+			// 	function (xhr) {console.log(xhr);}
+			// );
+
+			// _o_.ajax.put(
+			// 	'https://reqres.in/api/users/2',
+			// 	{
+			// 		"name": "morpheus",
+			// 		"job": "leader"
+			// 	},
+			// 	function (xhr) {console.log(xhr.responseText);},
+			// 	function (xhr) {console.log(xhr);}
+			// );
+
+			// _o_.ajax.delete(
+			// 	'https://reqres.in/api/users/3',
+			// 	function (xhr) {console.log(xhr.responseText);},
+			// 	function (xhr) {console.log(xhr);}
+			// );
+
+			// _o_.ajax.patch(
+			// 	'https://reqres.in/api/users/2',
+			// 	{
+			// 		"name": "morpheus",
+			// 		"job": "zion resident"
+			// 	},
+			// 	function (xhr) {console.log(xhr.responseText);},
+			// 	function (xhr) {console.log(xhr);}
+			// );
+		})();
+	</script>
+</head>
+
+<body>
+</body>
+
+</html>

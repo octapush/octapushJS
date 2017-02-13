@@ -16,7 +16,7 @@
  * - ADD AJAX
  */
 
-(function () {
+(function (w) {
     'use strict';
     var version = '1.7.02.11';
 
@@ -129,7 +129,7 @@
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
             isFunction: function (obj) {
-                return obj instanceof Function || Object.prototype.toString().call(obj) === '[object Function]';
+                return obj instanceof Function || _o_.utility.getType(obj) === 'function';
             },
             /**
              * @desc Check the `obj` is a string or not.
@@ -153,7 +153,7 @@
              * @returns {bool} return TRUE if the `obj` is an array. Otherwise is FALSE.
              */
             isArray: function (obj) {
-                return _o_.compare.isUndefined(obj) ? false : _o_.utility.getType(obj) === 'object' || _o_.utility.getType(obj) === 'array';
+                return _o_.compare.isUndefined(obj) ? false : Array.isArray(obj);
             },
             /**
              * @desc Check the `obj` is an integer or not.
@@ -163,8 +163,16 @@
             isInteger: function (obj) {
                 return obj % 0x1 === 0x0;
             },
-            isFloat: function(obj) {
+            isFloat: function (obj) {
                 return Number(obj) === obj && obj % 1 !== 0;
+            },
+            isJsonObject: function (obj) {
+                return _o_.compare.isUndefined(obj) ?
+                    false :
+                    (
+                        _o_.compare.isFunction(obj) ?
+                        false : {}.constructor === obj.constructor
+                    )
             }
         },
         utility: {
@@ -179,11 +187,11 @@
             /**
              * @desc Don't do anything
              */
-            noop: function () { },
+            noop: function () {},
             /**
              * @desc Don't do anything
              */
-            noOperation: function () { },
+            noOperation: function () {},
             /**
              * @desc Give the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              * @param {any} obj
@@ -206,10 +214,46 @@
                     if (func && _o_.compare.isFunction(func))
                         func(i);
                 }
+            },
+            each: function (obj, callback, flattenNested) {
+                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(obj))
+                    return;
+
+                flattenNested = _o_.utility.ifNull(flattenNested, false);
+
+                if (_o_.compare.isArray(obj)) {
+                    obj.forEach(function (val, key, arr) {
+                        if (_o_.compare.isArray(val) || _o_.compare.isJsonObject(val)) {
+                            if (flattenNested)
+                                _o_.utility.each(val, callback, flattenNested);
+                            else
+                            if (callback) callback(key, val);
+
+                        } else {
+                            if (callback) callback(key, val);
+                        }
+                    });
+
+                } else if (_o_.compare.isJsonObject(obj)) {
+                    for (var key in obj) {
+                        if (_o_.compare.isArray(obj[key]) || _o_.compare.isJsonObject(obj[key])) {
+                            if (flattenNested)
+                                _o_.utility.each(obj[key], callback, flattenNested);
+                            else
+                            if (callback) callback(key, obj[key]);
+
+                        } else {
+                            if (callback) callback(key, obj[key]);
+                        }
+                    }
+                }
+            },
+            forEach: function (obj, callback) {
+                _o_.utility.each(obj, callback)
             }
         }
     };
 
     _o_.showCopyleft();
-    window.octapushJS = window._o_ = _o_;
-})();
+    w.octapushJS = w._o_ = _o_;
+})(window);
