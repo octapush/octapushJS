@@ -172,7 +172,7 @@
                     false :
                     str === _o_.string.toUpper(str);
             },
-            
+
             charAtIndex: function (str, index) {
                 return _o_.compare.isNullOrEmpty(str) ?
                     '' :
@@ -248,7 +248,7 @@
                     '' :
                     str.substring(str.length - _o_.utility.ifNull(count, 0x1));
             },
-            
+
             collapseWhitespace: function (str) {
                 return _o_.compare.isNullOrEmpty(str) ?
                     '' :
@@ -296,7 +296,7 @@
                             )
                     );
             },
-            
+
             chompRight: function (str, suffix) {
                 return _o_.compare.isNullOrEmpty(str) ?
                     '' :
