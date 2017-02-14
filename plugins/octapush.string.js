@@ -16,8 +16,8 @@
  * - ADD ParseCSV
  * - ADD decodeHtmlEntities
  * - ADD escapeHTML
- * - ADD ensureLeft(prefix)
- * - ADD ensureRight(suffix)
+ * + ADD ensureLeft(prefix)
+ * + ADD ensureRight(suffix)
  * - ADD humanize()
  * - ADD stripTags([tag1],[tag2],...)
  * - ADD toBoolean() / toBool()
@@ -37,7 +37,7 @@
         return;
 
     } else {
-        var version = '1.7.02.13';
+        var version = '1.7.02.14';
 
         _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
             /**
@@ -281,6 +281,14 @@
                             str :
                             _o_.string.chompRight(_o_.string.chompLeft(str, prefix), suffix)
                     )
+            },
+
+            ensureLeft: function(str, prefix) {
+                return str.indexOf(prefix) === 0 ? str : _o_.string.concat(prefix, str);
+            },
+
+            ensureRight: function(str, suffix) {
+                return _o_.string.isEndsWith(str, suffix) ? str : _o_.string.concat(str, suffix);
             },
 
             chompLeft: function (str, prefix) {

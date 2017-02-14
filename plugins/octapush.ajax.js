@@ -111,6 +111,7 @@
                     }
                 };
             },
+
             get: function (url, data, success, error) {
                 _o_.ajax.request({
                     url: url,
@@ -120,6 +121,7 @@
                     error: error
                 });
             },
+
             post: function (url, data, success, error) {
                 _o_.ajax.request({
                     url: url,
@@ -129,6 +131,7 @@
                     error: error
                 });
             },
+
             put: function (url, data, success, error) {
                 _o_.ajax.request({
                     url: url,
@@ -138,6 +141,7 @@
                     error: error
                 });
             },
+
             delete: function (url, success, error) {
                 _o_.ajax.request({
                     url: url,
@@ -145,6 +149,7 @@
                     error: error
                 });
             },
+            
             patch: function (url, data, success, error) {
                 _o_.ajax.request({
                     url: url,
