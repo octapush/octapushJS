@@ -34,6 +34,24 @@
     } else {
         const version = '1.7.02.13';
 
+        _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
+            convertToQueryString: function(object) {
+                return !_o_.compare.isJsonObject(object) ?
+                    object :
+                    (
+                        Object.keys(object).reduce(function(acc, val) {
+                            var prefix = !acc ? '' : [acc, '&'].join(''); 
+                            return [
+                                prefix,
+                                encodeURIComponent(val),
+                                '=',
+                                encodeURIComponent(object[val])
+                            ].join('');
+                        })
+                    );
+            }
+        });
+
         _o_.ajax = Object.assign(_o_.utility.ifNull(_o_.ajax, {}), {
             request: function (params) {
                 var xhr = null;
@@ -41,11 +59,13 @@
                 params = {
                     url: params.url || null,
                     data: params.data || null,
-                    type: _o_.utility.ifNull(params.type, 'application/xml'),
                     method: _o_.utility.ifNull(params.method, 'GET'),
                     async: _o_.utility.ifNull(params.async, false),
                     success: params.success || null,
-                    error: params.error || null
+                    error: params.error || null, 
+                    headers: _o_.utility.ifNull(params.headers, {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    })
                 };
 
                 if (_o_.compare.isNullOrEmpty(params)) return;
@@ -83,18 +103,27 @@
                 }
                 // EOF : create XHR
 
-                // handle by CORS support handler
+                // CORS support handler
                 if (params.method.toLowerCase() === 'get')
                     params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
 
-                if ("withCredentials" in xhr) {
+                if (("withCredentials" in xhr) && (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest)))) {
                     xhr.open(params.method, params.url, true);
 
                 } else {
                     xhr.open(params.method, params.url);
-                    
-                    xhr.setRequestHeader('Content-Type', params.type);
                 }
+
+                // set headers
+                //xhr.setRequestHeader('Content-Type', params.type);
+                if (_o_.compare.isNullOrEmpty(params.headers['X-Requested-With']))
+                    params.headers = Object.assign(_o_.utility.ifNull(params.headers, {}), {
+                        'X-Requested-With': 'XMLHttpRequest'
+                    });
+                    
+                Object.keys(params.headers).forEach(function(key) {
+                    (params.headers[key] && xhr.setRequestHeader(key, params.headers[key]))
+                });
 
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
 
