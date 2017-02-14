@@ -17,7 +17,7 @@
         return;
 
     } else {
-        var version = '1.7.02.13';
+        const version = '1.7.02.13';
 
         _o_.array = Object.assign(_o_.utility.ifNull(_o_.array, {}), {
             version: version,

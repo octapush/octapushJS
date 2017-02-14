@@ -18,7 +18,7 @@
 
 (function (w) {
     'use strict';
-    var version = '1.7.02.13';
+    const version = '1.7.02.13';
 
     var _o_ = {
         /**

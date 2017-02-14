@@ -32,7 +32,7 @@
         return;
 
     } else {
-        var version = '1.7.02.13';
+        const version = '1.7.02.13';
 
         _o_.ajax = Object.assign(_o_.utility.ifNull(_o_.ajax, {}), {
             request: function (params) {

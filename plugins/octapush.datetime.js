@@ -17,7 +17,7 @@
         return;
 
     } else {
-        var version = '1.7.02.13';
+        const version = '1.7.02.13';
 
         // BOF: LOCALIZATION 
         _o_.localization.datetime = Object.assign(_o_.utility.ifNull(_o_.localization.datetime, {}), {

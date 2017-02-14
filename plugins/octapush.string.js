@@ -37,7 +37,7 @@
         return;
 
     } else {
-        var version = '1.7.02.14';
+        const version = '1.7.02.14';
 
         _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
             /**
