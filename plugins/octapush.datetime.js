@@ -10,6 +10,12 @@
  === Contributors ===
  ... just type your name here after editing the script ...
  */
+
+/**
+ * TODO:
+ * - CHANGE -> Convert localization var into setLocalization() method
+ */
+
 (function (w) {
     'use strict';
     if (!w.octapushJS || !w._o_) {

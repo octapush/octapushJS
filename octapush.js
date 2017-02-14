@@ -14,6 +14,7 @@
 /**
  * TODO:
  * - ADD AJAX
+ * - REVISE each/forEach method into jquery like
  */
 
 (function (w) {
@@ -182,7 +183,9 @@
              * @returns {string} Data type name;
              */
             getType: function (obj) {
-                return !arguments ? null : (null === obj ? obj + '' : (typeof obj).toString());
+                return !arguments ?
+                    null :
+                    (null === obj ? obj + '' : (typeof obj).toString());
             },
             /**
              * @desc Don't do anything
@@ -199,7 +202,9 @@
              * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              */
             ifNull: function (obj, defaultValue) {
-                return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
+                return _o_.compare.isNullOrEmpty(arguments) ?
+                    null :
+                    (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
             },
             /**
              * @desc Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
@@ -210,10 +215,9 @@
             loop: function (nTime, func) {
                 if (!func) return;
 
-                for (var i = 0x0; i < nTime; i++) {
+                for (var i = 0x0; i < nTime; i++)
                     if (func && _o_.compare.isFunction(func))
                         func(i);
-                }
             },
             each: function (obj, callback, flattenNested) {
                 if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(obj))
@@ -250,6 +254,19 @@
             },
             forEach: function (obj, callback) {
                 _o_.utility.each(obj, callback)
+            },
+            extend: function (objects) {
+                var argues = arguments;
+                return _o_.compare.isNullOrEmpty(argues) ?
+                    null :
+                    (function () {
+                        Array.prototype.slice.call(argues, 1).forEach(function (source) {
+                            for (var key in source)
+                                if (source[key] !== undefined)
+                                    objects[key] = source[key]
+                        });
+                        return objects
+                    })();
             }
         }
     };
