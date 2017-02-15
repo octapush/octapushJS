@@ -1,0 +1,39 @@
+<octapushJSDocumentation>
+    <authors>
+        <prime>
+            <name>AuthorName</name>
+            <email>AuthorEmail</email>
+            <url>AuthorUrl</url>
+        </prime>
+
+        <editors>
+            <item>
+                If you want to edit this document, follow below instruction:
+                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                    and replace the value inside it as defined on instruction #2.
+                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+            <item>
+        </editors>
+    </authors>
+
+    <namespace>octapushJS or _o_</namespace>
+    <methodName>methodName</methodName>
+    <description>description goes here</description>
+    <parameters>
+        <item>
+            <type>Parameter Data Type</type>
+            <name>Parameter Name</name>
+            <description>Parameter description</description> 
+        </item>        
+    </parameters>
+    <return>
+        <type>Parameter Data Type</type>
+        <description>Parameter description</description> 
+    </return>
+    <samples>
+        <item>
+            <description>Sample description</description> 
+            <codes>Sample description</codes> 
+        </item>
+    </samples>    
+</octapushJSDocumentation>

@@ -1,0 +1,41 @@
+<octapushJSDocumentation>
+    <authors>
+        <prime>
+            <name>Fadhly Permata</name>
+            <email>fadhly.permata@gmail.com</email>
+            <url>www.octapush.com</url>
+        </prime>
+        
+        <editors>
+            <item>
+                If you want to edit this document, follow below instruction:
+                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                    and replace the value inside it as defined on instruction #2.
+                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+            <item>
+        </editors>
+    </authors>
+
+    <namespace>octapushJS or _o_</namespace>
+    <methodName>version</methodName>
+    <description>
+        Get octapushJS core version.
+        \<strong\>Note :\</strong\>;
+        Since this is not a method, do not call \<i\>version\</i\>; property using \<i\>open-close\</i/> bracket "()".
+        See the sample for more detail.
+    </description>
+    <parameters></parameters>
+    <return>
+        <type>string</type>
+        <description>Returning octapushJS core version.</description> 
+    </return>
+    <samples>
+        <item>
+            <description></description> 
+            <codes>
+                var oVersion = _o_.version;
+                alert(oVersion);
+            </codes> 
+        </item>
+    </samples>
+</octapushJSDocumentation>

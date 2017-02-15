@@ -1,7 +1,7 @@
 /*
  === octapushJS ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===
@@ -141,7 +141,7 @@
                 return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
             /**
-             * @desc Check the `obj` is a BOOLEAN or not.
+             * @desc Check the `obj` is a boolean or not.
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
@@ -164,9 +164,19 @@
             isInteger: function (obj) {
                 return obj % 0x1 === 0x0;
             },
+            /**
+             * @desc Check the `obj` is a float or not.
+             * @param {any} obj
+             * @returns {bool} return TRUE if the `obj` is an float. Otherwise is FALSE.
+             */
             isFloat: function (obj) {
                 return Number(obj) === obj && obj % 1 !== 0;
             },
+            /**
+             * @desc Check the `obj` is a JSON object or not.
+             * @param {any} obj
+             * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
+             */
             isJsonObject: function (obj) {
                 return _o_.compare.isUndefined(obj) ?
                     false :

@@ -1,7 +1,7 @@
 /*
  === octapushJS.string ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===
@@ -18,14 +18,14 @@
  * - ADD escapeHTML
  * + ADD ensureLeft(prefix)
  * + ADD ensureRight(suffix)
- * - ADD humanize()
+ * + ADD humanize()
  * - ADD stripTags([tag1],[tag2],...)
  * - ADD toBoolean() / toBool()
  * - ADD toCSV(options)
  * - ADD toFloat([precision])
  * - ADD toInt() / toInteger()
  * - ADD truncate(length, [chars])
- * - ADD underscore()
+ * + ADD underscore()
  * - ADD unescapeHTML()
  * - ADD wrapHTML()
  */
@@ -37,7 +37,7 @@
         return;
 
     } else {
-        const version = '1.7.02.14';
+        const version = '1.7.02.15';
 
         _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
             /**
@@ -283,11 +283,11 @@
                     )
             },
 
-            ensureLeft: function(str, prefix) {
+            ensureLeft: function (str, prefix) {
                 return str.indexOf(prefix) === 0 ? str : _o_.string.concat(prefix, str);
             },
 
-            ensureRight: function(str, suffix) {
+            ensureRight: function (str, suffix) {
                 return _o_.string.isEndsWith(str, suffix) ? str : _o_.string.concat(str, suffix);
             },
 
@@ -456,6 +456,31 @@
                             str :
                             _o_.string.replaces(str, [/[^\w\s]|_/, /\s+/], ['', ' '])
                     )
+            },
+
+            underscore: function (str) {
+                return _o_.compare.isNullOrEmpty(str) ?
+                    '' :
+                    (
+                        !_o_.compare.isString(str) ?
+                            str :
+                            (function () {
+                                var s = _o_.string.toLower(_o_.string.replaces(_o_.string.trim(str), [/([a-z\d])([A-Z]+)/, /[-\s]+/], ['$1_$2', '_']));
+                                return _o_.string.isLower(_o_.string.left(str))  ?
+                                    s :
+                                    '_' + s;
+                            })()
+                    );
+            },
+
+            humanize: function (str) {
+                return _o_.compare.isNullOrEmpty(str) ?
+                    '' :
+                    (
+                        !_o_.compare.isString(str) ?
+                            str :
+                            _o_.string.capitalize(_o_.string.trim(_o_.string.replaces(_o_.string.underscore(str), [/_id$/, /_/], ['', ' '])), false)
+                    );
             },
 
             concat: function (stringsArgs) {

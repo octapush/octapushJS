@@ -1,8 +1,7 @@
 /*
  === octapush-wrloader ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
- - fadhly.permata@octapush.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===

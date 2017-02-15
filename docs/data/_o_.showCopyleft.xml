@@ -1,0 +1,32 @@
+<octapushJSDocumentation>
+    <authors>
+        <prime>
+            <name>Fadhly Permata</name>
+            <email>fadhly.permata@gmail.com</email>
+            <url>www.octapush.com</url>
+        </prime>
+
+        <editors>
+            <item>
+                If you want to edit this document, follow below instruction:
+                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                    and replace the value inside it as defined on instruction #2.
+                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+            <item>
+        </editors>
+    </authors>
+
+    <namespace>octapushJS or _o_</namespace>
+    <methodName>showCopyleft()</methodName>
+    <description>Display octapush string art on browser console.</description>
+    <parameters></parameters>
+    <return></return>
+    <samples>
+        <item>
+            <description></description> 
+            <codes>
+                _o_.showCopyleft();
+            </codes> 
+        </item>
+    </samples>    
+</octapushJSDocumentation>

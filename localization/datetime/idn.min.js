@@ -1,7 +1,7 @@
 /*
  === octapushJS.localization.datetime ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===

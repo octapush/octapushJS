@@ -1,0 +1,59 @@
+<octapushJSDocumentation>
+    <authors>
+        <prime>
+            <name>Fadhly Permata</name>
+            <email>fadhly.permata@gmail.com</email>
+            <url>www.octapush.com</url>
+        </prime>
+
+        <editors>
+            <item>
+                If you want to edit this document, follow below instruction:
+                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                    and replace the value inside it as defined on instruction #2.
+                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+            <item>
+        </editors>
+    </authors>
+
+    <namespace>octapushJS.compare or _o_.compare</namespace>
+    <methodName>_o_.compare.isArray()</methodName>
+    <description>Check the `obj` is an Array or not.</description>
+    <parameters>
+        <item>
+            <type>any</type>
+            <name>obj</name>
+            <description>The object to be checked</description> 
+        </item>
+    </parameters>
+    <return>
+        <type>bool</type>
+        <description>Return `TRUE` if the `obj` is an array. Otherwise is `FALSE`</description> 
+    </return>
+    <samples>
+        <item>
+            <description>Sample 1</description> 
+            <codes>
+                var data = [1, 2, 3, 4, 5, 6];
+                console.log(_o_.compare.isArray(data));
+            </codes> 
+        </item>
+        <item>
+            <description>Sample 2</description> 
+            <codes>
+                var data = 'my name is Fadhly Permata'.split('');
+                console.log(_o_.compare.isArray(data));
+            </codes> 
+        </item>
+        <item>
+            <description>Sample 3</description> 
+            <codes>
+                var data = {
+                    name: "Fadhly Permata",
+                    dob: "1985-05-13"
+                };
+                console.log(_o_.compare.isArray(data));
+            </codes>
+        </item>
+    </samples>    
+</octapushJSDocumentation>
