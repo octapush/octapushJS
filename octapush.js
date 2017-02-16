@@ -229,38 +229,41 @@
                     if (func && _o_.compare.isFunction(func))
                         func(i);
             },
-            each: function (obj, callback, flattenNested) {
-                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(obj))
-                    return;
+            each: function(obj, callback, args) {
+                var value = null;
+                var i = 0;
+                var BreakException = {};
 
-                flattenNested = _o_.utility.ifNull(flattenNested, false);
+                if (callback) {
+                    if (args) {
+                        if (_o_.compare.isArray(obj))
+                            obj.forEach(function(val, key) {
+                                value = callback.apply(val, args);
+                                if (false === value) throw BreakException;
+                            });
 
-                if (_o_.compare.isArray(obj)) {
-                    obj.forEach(function (val, key, arr) {
-                        if (_o_.compare.isArray(val) || _o_.compare.isJsonObject(val)) {
-                            if (flattenNested)
-                                _o_.utility.each(val, callback, flattenNested);
-                            else
-                            if (callback) callback(key, val);
+                        else
+                            for (i in obj) {
+                                value = callback.apply(obj[i], args);
+                                if (false === value) break;
+                            }
 
-                        } else {
-                            if (callback) callback(key, val);
-                        }
-                    });
-
-                } else if (_o_.compare.isJsonObject(obj)) {
-                    for (var key in obj) {
-                        if (_o_.compare.isArray(obj[key]) || _o_.compare.isJsonObject(obj[key])) {
-                            if (flattenNested)
-                                _o_.utility.each(obj[key], callback, flattenNested);
-                            else
-                            if (callback) callback(key, obj[key]);
-
-                        } else {
-                            if (callback) callback(key, obj[key]);
-                        }
+                    } else {
+                        if (_o_.compare.isArray(obj))
+                            obj.forEach(function(val, key) {
+                                value = callback.call(val, key, val);
+                                if (false === value) throw BreakException;
+                            });
+                        
+                        else
+                            for (i in obj) {
+                                value = callback.call(obj[i], i, obj[i]);
+                                if (false === value) break;
+                            }
                     }
                 }
+
+                return obj;
             },
             forEach: function (obj, callback) {
                 _o_.utility.each(obj, callback)
