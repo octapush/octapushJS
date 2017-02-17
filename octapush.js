@@ -1,7 +1,7 @@
 /*
  === octapushJS ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===
@@ -14,11 +14,12 @@
 /**
  * TODO:
  * - ADD AJAX
+ * - REVISE utility.extend to support deep merging;
  */
 
 (function (w) {
     'use strict';
-    const version = '1.7.02.13';
+    const version = '1.7.02.17';
 
     var _o_ = {
         /**
@@ -140,7 +141,7 @@
                 return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
             /**
-             * @desc Check the `obj` is a BOOLEAN or not.
+             * @desc Check the `obj` is a boolean or not.
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
@@ -163,9 +164,19 @@
             isInteger: function (obj) {
                 return obj % 0x1 === 0x0;
             },
+            /**
+             * @desc Check the `obj` is a float or not.
+             * @param {any} obj
+             * @returns {bool} return TRUE if the `obj` is an float. Otherwise is FALSE.
+             */
             isFloat: function (obj) {
                 return Number(obj) === obj && obj % 1 !== 0;
             },
+            /**
+             * @desc Check the `obj` is a JSON object or not.
+             * @param {any} obj
+             * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
+             */
             isJsonObject: function (obj) {
                 return _o_.compare.isUndefined(obj) ?
                     false :
@@ -182,7 +193,9 @@
              * @returns {string} Data type name;
              */
             getType: function (obj) {
-                return !arguments ? null : (null === obj ? obj + '' : (typeof obj).toString());
+                return !arguments ?
+                    null :
+                    (null === obj ? obj + '' : (typeof obj).toString());
             },
             /**
              * @desc Don't do anything
@@ -199,7 +212,9 @@
              * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              */
             ifNull: function (obj, defaultValue) {
-                return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
+                return _o_.compare.isNullOrEmpty(arguments) ?
+                    null :
+                    (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
             },
             /**
              * @desc Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
@@ -210,46 +225,83 @@
             loop: function (nTime, func) {
                 if (!func) return;
 
-                for (var i = 0x0; i < nTime; i++) {
+                for (var i = 0x0; i < nTime; i++)
                     if (func && _o_.compare.isFunction(func))
                         func(i);
-                }
             },
-            each: function (obj, callback, flattenNested) {
-                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(obj))
-                    return;
+            /**
+             * @description Do some actions for each element inside `obj`
+             * 
+             * @param {object} `obj` the object which will be iterated.
+             * @param {function} `callback` the callback to be processed.
+             * @param {any} args the arguments to be called by `callback`
+             * @returns the original `obj`
+             */
+            each: function(obj, callback, args) {
+                var value = null;
+                var i = 0;
+                var BreakException = {};
 
-                flattenNested = _o_.utility.ifNull(flattenNested, false);
+                if (callback) {
+                    if (args) {
+                        if (_o_.compare.isArray(obj))
+                            obj.forEach(function(val, key) {
+                                value = callback.apply(val, args);
+                                if (false === value) throw BreakException;
+                            });
 
-                if (_o_.compare.isArray(obj)) {
-                    obj.forEach(function (val, key, arr) {
-                        if (_o_.compare.isArray(val) || _o_.compare.isJsonObject(val)) {
-                            if (flattenNested)
-                                _o_.utility.each(val, callback, flattenNested);
-                            else
-                            if (callback) callback(key, val);
+                        else
+                            for (i in obj) {
+                                value = callback.apply(obj[i], args);
+                                if (false === value) break;
+                            }
 
-                        } else {
-                            if (callback) callback(key, val);
-                        }
-                    });
-
-                } else if (_o_.compare.isJsonObject(obj)) {
-                    for (var key in obj) {
-                        if (_o_.compare.isArray(obj[key]) || _o_.compare.isJsonObject(obj[key])) {
-                            if (flattenNested)
-                                _o_.utility.each(obj[key], callback, flattenNested);
-                            else
-                            if (callback) callback(key, obj[key]);
-
-                        } else {
-                            if (callback) callback(key, obj[key]);
-                        }
+                    } else {
+                        if (_o_.compare.isArray(obj))
+                            obj.forEach(function(val, key) {
+                                value = callback.call(val, key, val);
+                                if (false === value) throw BreakException;
+                            });
+                        
+                        else
+                            for (i in obj) {
+                                value = callback.call(obj[i], i, obj[i]);
+                                if (false === value) break;
+                            }
                     }
                 }
+
+                return obj;
             },
-            forEach: function (obj, callback) {
-                _o_.utility.each(obj, callback)
+            /**
+             * @description Do some actions for each element inside `obj`
+             * 
+             * @param {object} `obj` the object which will be iterated.
+             * @param {function} `callback` the callback to be processed.
+             * @param {any} args the arguments to be called by `callback`
+             * @returns the original `obj`
+             */
+            forEach: function (obj, callback, args) {
+                _o_.utility.each(obj, callback, args)
+            },
+            /**
+             * @description Merge the contents of two or more objects together into the first object.
+             * 
+             * @param {object} `objects` The object to be merged.
+             * @returns {object} Returning merged object.
+             */
+            extend: function (objects) {
+                var argues = arguments;
+                return _o_.compare.isNullOrEmpty(argues) ?
+                    null :
+                    (function () {
+                        Array.prototype.slice.call(argues, 1).forEach(function (source) {
+                            for (var key in source)
+                                if (source[key] !== undefined)
+                                    objects[key] = source[key]
+                        });
+                        return objects
+                    })();
             }
         }
     };
