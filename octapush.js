@@ -14,12 +14,12 @@
 /**
  * TODO:
  * - ADD AJAX
- * - REVISE each/forEach method into jquery like
+ * - REVISE utility.extend to support deep merging;
  */
 
 (function (w) {
     'use strict';
-    const version = '1.7.02.13';
+    const version = '1.7.02.17';
 
     var _o_ = {
         /**
@@ -229,6 +229,14 @@
                     if (func && _o_.compare.isFunction(func))
                         func(i);
             },
+            /**
+             * @description Do some actions for each element inside `obj`
+             * 
+             * @param {object} `obj` the object which will be iterated.
+             * @param {function} `callback` the callback to be processed.
+             * @param {any} args the arguments to be called by `callback`
+             * @returns the original `obj`
+             */
             each: function(obj, callback, args) {
                 var value = null;
                 var i = 0;
@@ -265,9 +273,23 @@
 
                 return obj;
             },
-            forEach: function (obj, callback) {
-                _o_.utility.each(obj, callback)
+            /**
+             * @description Do some actions for each element inside `obj`
+             * 
+             * @param {object} `obj` the object which will be iterated.
+             * @param {function} `callback` the callback to be processed.
+             * @param {any} args the arguments to be called by `callback`
+             * @returns the original `obj`
+             */
+            forEach: function (obj, callback, args) {
+                _o_.utility.each(obj, callback, args)
             },
+            /**
+             * @description Merge the contents of two or more objects together into the first object.
+             * 
+             * @param {object} `objects` The object to be merged.
+             * @returns {object} Returning merged object.
+             */
             extend: function (objects) {
                 var argues = arguments;
                 return _o_.compare.isNullOrEmpty(argues) ?
