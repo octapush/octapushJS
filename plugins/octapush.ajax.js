@@ -12,6 +12,8 @@
 
  === THANKS TO : ===
  - CORS Handling : Monsur Hossain (https://www.html5rocks.com/en/tutorials/cors/)
+ - https://www.w3.org/
+ - MDN : https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
  */
 
 /**
