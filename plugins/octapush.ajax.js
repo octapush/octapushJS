@@ -27,7 +27,7 @@
         return;
 
     } else {
-        const version = '1.7.02.13';
+        const version = '1.7.02.21';
 
         var internal = {
             parseAndCallAjax: function (method, params) {
