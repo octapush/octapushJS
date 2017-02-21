@@ -29,23 +29,30 @@
     } else {
         const version = '1.7.02.13';
 
-        _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
-            convertToQueryString: function (object) {
-                return !_o_.compare.isJsonObject(object) ?
-                    object :
-                    (
-                        Object.keys(object).reduce(function (acc, val) {
-                            var prefix = !acc ? '' : [acc, '&'].join('');
-                            return [
-                                prefix,
-                                encodeURIComponent(val),
-                                '=',
-                                encodeURIComponent(object[val])
-                            ].join('');
-                        })
-                    );
+        var internal = {
+            parseAndCallAjax: function (method, params) {
+                var data = null;
+                var success = null;
+
+                if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1]))
+                    data = params[1];
+
+                if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1]))
+                    success = params[1];
+                else {
+                    success = params[2];
+                }
+
+                params = {
+                    url: params[0],
+                    data: data || null,
+                    method: method,
+                    success: success || null
+                };
+
+                _o_.ajax.request(params);
             }
-        });
+        };
 
         _o_.ajax = Object.assign(_o_.utility.ifNull(_o_.ajax, {}), {
             request: function (params) {
@@ -58,11 +65,7 @@
                     success: params.success || null,
                     error: params.error || null,
                     headers: params.headers || {},
-                    // headers: _o_.utility.ifNull(params.headers, {
-                    //     'Content-Type': 'application/x-www-form-urlencoded'
-                    // }),
-                    withCredentials: params.withCredentials || false,
-                    dataType: 'TEXT'
+                    withCredentials: params.withCredentials || false
                 };
 
                 var xhr = null;
@@ -110,14 +113,23 @@
                 xhr.withCredentials = params.withCredentials;
 
                 // set headers (preflight mode)
-                _o_.utility.each(params.headers, function(key, val) {
+                _o_.utility.each(params.headers, function (key, val) {
                     if (val)
                         xhr.setRequestHeader(key, val);
                 });
 
+                // set response type & override mime type
+                if (!_o_.compare.isNullOrEmpty(params.dataType)) {
+                    xhr.responseType = params.dataType;
+
+                    // var lType = ['', 'arraybuffer', 'blob', 'document', 'json', 'text']
+                    // var lMime = ['application/json'];
+                    //xhr.overrideMimeType('application/json');
+                }
+
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
 
-                xhr.onreadystatechange = function() {
+                xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200) {
                             if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success))
@@ -129,6 +141,48 @@
                         }
                     }
                 };
+            },
+
+            // function (url, data, success)
+            get: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('GET', arguments);
+            },
+
+            // function (url, data, success)
+            post: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('POST', arguments);
+            },
+
+            put: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PUT', arguments);
+            },
+
+            delete: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('DELETE', arguments);
+            },
+
+            patch: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PATCH', arguments);
             }
         });
     }
