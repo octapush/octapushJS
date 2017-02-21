@@ -50,6 +50,10 @@
         /**
          * @desc Buffer for localization storage.
          */
+        settings: {
+            pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
+            pluginsName: ['array', 'string', 'datetime', 'number']
+        },
         localization: {},
         /**
          * @desc Returning octapushJS core version.
@@ -327,6 +331,26 @@
                         });
                         return objects
                     })();
+            },
+            /**
+             * Including octapush plugin.
+             * 
+             * @param {string} pluginName. Available command (plugin) is 'string', 'array', 'number', 'datetime'
+             * @param {function} callback. A callback which will be processed after loading plugin is done. 
+             * @returns -
+             */
+            includePlugin: function(pluginName, callback) {
+                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName))
+                    return;
+                
+                var pluginFile = ['octapush.', pluginName, '.js'].join('');
+                var pluginUrl = [_o_.settings.pluginsPath, pluginFile].join('');
+
+                _o_.ajax.get(pluginUrl, function(xhr) {
+                    eval(xhr.responseText);
+
+                    if (callback) callback();
+                });
             }
         },
         ajax: {
