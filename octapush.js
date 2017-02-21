@@ -19,7 +19,32 @@
 
 (function (w) {
     'use strict';
-    const version = '1.7.02.17';
+    const version = '1.7.02.21';
+
+    var internal = {
+        parseAndCallAjax: function (method, params) {
+            var data = null;
+            var success = null;
+
+            if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1]))
+                data = params[1];
+
+            if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1]))
+                success = params[1];
+            else {
+                success = params[2];
+            }
+
+            params = {
+                url: params[0],
+                data: data || null,
+                method: method,
+                success: success || null
+            };
+
+            _o_.ajax.request(params);
+        }
+    };
 
     var _o_ = {
         /**
@@ -237,7 +262,7 @@
              * @param {any} args the arguments to be called by `callback`
              * @returns the original `obj`
              */
-            each: function(obj, callback, args) {
+            each: function (obj, callback, args) {
                 var value = null;
                 var i = 0;
                 var BreakException = {};
@@ -245,7 +270,7 @@
                 if (callback) {
                     if (args) {
                         if (_o_.compare.isArray(obj))
-                            obj.forEach(function(val, key) {
+                            obj.forEach(function (val, key) {
                                 value = callback.apply(val, args);
                                 if (false === value) throw BreakException;
                             });
@@ -258,11 +283,11 @@
 
                     } else {
                         if (_o_.compare.isArray(obj))
-                            obj.forEach(function(val, key) {
+                            obj.forEach(function (val, key) {
                                 value = callback.call(val, key, val);
                                 if (false === value) throw BreakException;
                             });
-                        
+
                         else
                             for (i in obj) {
                                 value = callback.call(obj[i], i, obj[i]);
@@ -302,6 +327,128 @@
                         });
                         return objects
                     })();
+            }
+        },
+        ajax: {
+            request: function (params) {
+                if (_o_.compare.isNullOrEmpty(params) || _o_.compare.isNullOrEmpty(params.url)) return;
+
+                params = {
+                    url: params.url || null,
+                    data: params.data || null,
+                    method: _o_.utility.ifNull(params.method, 'GET'),
+                    success: params.success || null,
+                    error: params.error || null,
+                    headers: params.headers || {},
+                    withCredentials: params.withCredentials || false
+                };
+
+                var xhr = null;
+
+                // BOF: CROSS BROWSER SUPPORT
+                // Chrome/Firefox/Opera/Safari/IE10+
+                if (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest))) {
+                    xhr = new XMLHttpRequest();
+
+                } else {
+                    // check for XDomainRequest object
+                    if (_o_.compare.isDefined(_o_.getType(XDomainRequest))) {
+                        xhr = new XDomainRequest();
+
+                    } else {
+                        version = [
+                            "MSXML2.XmlHttp.6.0",
+                            "MSXML2.XmlHttp.5.0",
+                            "MSXML2.XmlHttp.4.0",
+                            "MSXML2.XmlHttp.3.0",
+                            "MSXML2.XmlHttp.2.0",
+                            "Microsoft.XmlHttp"
+                        ];
+
+                        // create xhr using higher version
+                        for (var i = 0; i < version.length; i++) {
+                            try {
+
+                            } catch (e) {
+                                if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
+                                    params.error(e);
+                            }
+                        }
+                    }
+                }
+                // EOF: CROSS BROWSER SUPPORT
+
+                if (params.method.toLowerCase() === 'get')
+                    params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
+
+                xhr.open(params.method, params.url, true);
+
+
+                // use credentials
+                xhr.withCredentials = params.withCredentials;
+
+                // set headers (preflight mode)
+                _o_.utility.each(params.headers, function (key, val) {
+                    if (val)
+                        xhr.setRequestHeader(key, val);
+                });
+
+                xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
+
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200) {
+                            if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success))
+                                params.success(xhr);
+
+                        } else {
+                            if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
+                                params.error(xhr);
+                        }
+                    }
+                };
+            },
+
+            // function (url, data, success)
+            get: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('GET', arguments);
+            },
+
+            // function (url, data, success)
+            post: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('POST', arguments);
+            },
+
+            put: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PUT', arguments);
+            },
+
+            delete: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('DELETE', arguments);
+            },
+
+            patch: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PATCH', arguments);
             }
         }
     };

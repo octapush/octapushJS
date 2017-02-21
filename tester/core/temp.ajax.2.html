@@ -5,7 +5,6 @@
 	<meta charset="utf-8" />
 	<title>octapush - WRLoader</title>
 	<script src="../../octapush.js"></script>
-	<script src="../../plugins/octapush.ajax.js"></script>
 	<script type="text/javascript">
 		(function () {
 			// _o_.ajax.request(
@@ -49,7 +48,7 @@
             //     }
 			// );
 
-            _o_.ajax.patch('https://reqres.in/api/users', function(xhr) {
+            _o_.ajax.get('https://reqres.in/api/users', function(xhr) {
                 console.log(xhr.responseText);
             });
 		})();
