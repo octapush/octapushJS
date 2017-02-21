@@ -1,7 +1,7 @@
 /*
  === octapushJS.pluginName ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===
@@ -12,17 +12,14 @@
 
  === THANKS TO : ===
  - CORS Handling : Monsur Hossain (https://www.html5rocks.com/en/tutorials/cors/)
+ - https://www.w3.org/
+ - MDN : https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
  */
 
 /**
  * NOTE:
  * - CORS test URL: http://html5rocks-cors.s3-website-us-east-1.amazonaws.com/index.html
  * - RESTFULL test URL: https://reqres.in/api/users
- */
-
-/**
- * TODO: 
- * - ADD parameterize())
  */
 
 (function (w) {
@@ -32,30 +29,56 @@
         return;
 
     } else {
-        const version = '1.7.02.13';
+        const version = '1.7.02.21';
+
+        var internal = {
+            parseAndCallAjax: function (method, params) {
+                var data = null;
+                var success = null;
+
+                if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1]))
+                    data = params[1];
+
+                if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1]))
+                    success = params[1];
+                else {
+                    success = params[2];
+                }
+
+                params = {
+                    url: params[0],
+                    data: data || null,
+                    method: method,
+                    success: success || null
+                };
+
+                _o_.ajax.request(params);
+            }
+        };
 
         _o_.ajax = Object.assign(_o_.utility.ifNull(_o_.ajax, {}), {
             request: function (params) {
-                var xhr = null;
+                if (_o_.compare.isNullOrEmpty(params) || _o_.compare.isNullOrEmpty(params.url)) return;
 
                 params = {
                     url: params.url || null,
                     data: params.data || null,
-                    type: _o_.utility.ifNull(params.type, 'application/xml'),
                     method: _o_.utility.ifNull(params.method, 'GET'),
-                    async: _o_.utility.ifNull(params.async, false),
                     success: params.success || null,
-                    error: params.error || null
+                    error: params.error || null,
+                    headers: params.headers || {},
+                    withCredentials: params.withCredentials || false
                 };
 
-                if (_o_.compare.isNullOrEmpty(params)) return;
+                var xhr = null;
 
-                // BOF : create XHR
-                // Chrome/Firefox/Opera/Safari
+                // BOF: CROSS BROWSER SUPPORT
+                // Chrome/Firefox/Opera/Safari/IE10+
                 if (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest))) {
                     xhr = new XMLHttpRequest();
 
                 } else {
+                    // check for XDomainRequest object
                     if (_o_.compare.isDefined(_o_.getType(XDomainRequest))) {
                         xhr = new XDomainRequest();
 
@@ -69,10 +92,9 @@
                             "Microsoft.XmlHttp"
                         ];
 
+                        // create xhr using higher version
                         for (var i = 0; i < version.length; i++) {
                             try {
-                                xhr = new ActiveXObject(version[i]);
-                                break;
 
                             } catch (e) {
                                 if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
@@ -81,26 +103,37 @@
                         }
                     }
                 }
-                // EOF : create XHR
+                // EOF: CROSS BROWSER SUPPORT
 
-                // handle by CORS support handler
                 if (params.method.toLowerCase() === 'get')
                     params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
 
-                if ("withCredentials" in xhr) {
-                    xhr.open(params.method, params.url, true);
+                xhr.open(params.method, params.url, true);
 
-                } else {
-                    xhr.open(params.method, params.url);
-                    
-                    xhr.setRequestHeader('Content-Type', params.type);
+
+                // use credentials
+                xhr.withCredentials = params.withCredentials;
+
+                // set headers (preflight mode)
+                _o_.utility.each(params.headers, function (key, val) {
+                    if (val)
+                        xhr.setRequestHeader(key, val);
+                });
+
+                // set response type & override mime type
+                if (!_o_.compare.isNullOrEmpty(params.dataType)) {
+                    xhr.responseType = params.dataType;
+
+                    // var lType = ['', 'arraybuffer', 'blob', 'document', 'json', 'text']
+                    // var lMime = ['application/json'];
+                    //xhr.overrideMimeType('application/json');
                 }
 
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
 
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 204) {
+                        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200) {
                             if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success))
                                 params.success(xhr);
 
@@ -112,52 +145,46 @@
                 };
             },
 
-            get: function (url, data, success, error) {
-                _o_.ajax.request({
-                    url: url,
-                    data: data,
-                    method: 'GET',
-                    success: success,
-                    error: error
-                });
+            // function (url, data, success)
+            get: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('GET', arguments);
             },
 
-            post: function (url, data, success, error) {
-                _o_.ajax.request({
-                    url: url,
-                    data: data,
-                    method: 'POST',
-                    success: success,
-                    error: error
-                });
+            // function (url, data, success)
+            post: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('POST', arguments);
             },
 
-            put: function (url, data, success, error) {
-                _o_.ajax.request({
-                    url: url,
-                    data: data,
-                    method: 'PUT',
-                    success: success,
-                    error: error
-                });
+            put: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PUT', arguments);
             },
 
-            delete: function (url, success, error) {
-                _o_.ajax.request({
-                    url: url,
-                    success: success,
-                    error: error
-                });
+            delete: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('DELETE', arguments);
             },
-            
-            patch: function (url, data, success, error) {
-                _o_.ajax.request({
-                    url: url,
-                    data: data,
-                    method: 'PATCH',
-                    success: success,
-                    error: error
-                });
+
+            patch: function (params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
+                    _o_.ajax.request(params);
+
+                else
+                    internal.parseAndCallAjax('PATCH', arguments);
             }
         });
     }
