@@ -120,15 +120,6 @@
                         xhr.setRequestHeader(key, val);
                 });
 
-                // set response type & override mime type
-                if (!_o_.compare.isNullOrEmpty(params.dataType)) {
-                    xhr.responseType = params.dataType;
-
-                    // var lType = ['', 'arraybuffer', 'blob', 'document', 'json', 'text']
-                    // var lMime = ['application/json'];
-                    //xhr.overrideMimeType('application/json');
-                }
-
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
 
                 xhr.onreadystatechange = function () {
