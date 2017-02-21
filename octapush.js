@@ -52,7 +52,6 @@
          */
         settings: {
             pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
-            pluginsName: ['array', 'string', 'datetime', 'number']
         },
         localization: {},
         /**
@@ -341,6 +340,9 @@
              */
             includePlugin: function (pluginName, callback) {
                 if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName))
+                    return;
+
+                if (_o_.hasOwnProperty(pluginName))
                     return;
 
                 var pluginFile = ['octapush.', pluginName, '.js'].join('');
