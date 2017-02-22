@@ -359,7 +359,9 @@
                         version = ["MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"];
                         // create xhr using higher version
                         for (var i = 0; i < version.length; i++) {
-                            try {} catch (e) {
+                            try {
+                                xhr = new ActiveXObject(version[i]);
+                            } catch (e) {
                                 if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error)) params.error(e);
                             }
                         }
