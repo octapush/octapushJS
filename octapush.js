@@ -12,6 +12,10 @@
  */
 (function(w) {
     'use strict';
+
+    // attach to window first
+    w.octapushJS = w._o_ = {};
+
     const version = '1.7.02.22';
     var internal = {
         parseAndCallAjax: function(method, params) {
@@ -31,7 +35,7 @@
             _o_.ajax.request(params);
         }
     };
-    var _o_ = {
+    _o_ = {
         settings: {
             pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
         },
@@ -404,14 +408,17 @@
                 if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
                 else internal.parseAndCallAjax('POST', arguments);
             },
+            // function (url, data, success)
             put: function(params) {
                 if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
                 else internal.parseAndCallAjax('PUT', arguments);
             },
+            // function (url, data, success)
             delete: function(params) {
                 if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
                 else internal.parseAndCallAjax('DELETE', arguments);
             },
+            // function (url, data, success)
             patch: function(params) {
                 if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
                 else internal.parseAndCallAjax('PATCH', arguments);
@@ -419,5 +426,4 @@
         }
     };
     _o_.showCopyleft();
-    w.octapushJS = w._o_ = _o_;
 })(window);
