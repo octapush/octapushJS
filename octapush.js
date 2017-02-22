@@ -86,7 +86,8 @@
         },
         compare: {
             /**
-             * @desc Check the object is null or not
+             * @description Check the object is null or not
+             * 
              * @param {any} obj
              * @returns {bool} returning TRUE if object is null or '' or undefined or array with length 0. Otherwise is FALSE.
              */
@@ -94,7 +95,8 @@
                 return _o_.compare.isUndefined(obj) || null === obj || '' === obj || 0x0 === obj.length;
             },
             /**
-             * @desc Check the `obj` is having properties or not.
+             * @description Check the `obj` is having properties or not.
+             * 
              * @param {object} obj
              * @returns {bool} returning TRUE if there are no properties inside `obj`. Otherwise is FALSE.
              */
@@ -103,7 +105,8 @@
                 return true;
             },
             /**
-             * @desc Check the `obj` is undefined or not.
+             * @description Check the `obj` is undefined or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is UNDEFINED. Otherwise is FALSE.
              */
@@ -111,7 +114,8 @@
                 return obj === undefined;
             },
             /**
-             * @desc Check the `obj` is defined or not.
+             * @description Check the `obj` is defined or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is DEFINED. Otherwise is FALSE.
              */
@@ -119,7 +123,8 @@
                 return obj !== undefined;
             },
             /**
-             * @desc Check the `obj` is a number or not.
+             * @description Check the `obj` is a number or not.
+             * 
              * @param {any} obj
              * @returns {bool} return FALSE if the `obj` is NUMBER. Otherwise is TRUE.
              */
@@ -127,7 +132,8 @@
                 return isNaN(obj);
             },
             /**
-             * @desc Check the `obj` is a number or not
+             * @description Check the `obj` is a number or not
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is NUMBER. Otherwise is FALSE.
              */
@@ -135,7 +141,8 @@
                 return !isNaN(obj);
             },
             /**
-             * @desc Check the `obj` is a JS function or not.
+             * @description Check the `obj` is a JS function or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
@@ -143,7 +150,8 @@
                 return obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}';
             },
             /**
-             * @desc Check the `obj` is a string or not.
+             * @description Check the `obj` is a string or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
@@ -151,7 +159,8 @@
                 return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
             /**
-             * @desc Check the `obj` is a boolean or not.
+             * @description Check the `obj` is a boolean or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
@@ -159,7 +168,8 @@
                 return obj === true || obj === false || obj.__proto__ === '[object Boolean]' || _o_.utility.getType(obj) === 'boolean';
             },
             /**
-             * @desc Check the `obj` is an array or not.
+             * @description Check the `obj` is an array or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an array. Otherwise is FALSE.
              */
@@ -167,7 +177,8 @@
                 return _o_.compare.isUndefined(obj) ? false : Array.isArray(obj);
             },
             /**
-             * @desc Check the `obj` is an integer or not.
+             * @description Check the `obj` is an integer or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an integer. Otherwise is FALSE.
              */
@@ -175,7 +186,8 @@
                 return obj % 0x1 === 0x0;
             },
             /**
-             * @desc Check the `obj` is a float or not.
+             * @description Check the `obj` is a float or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an float. Otherwise is FALSE.
              */
@@ -183,7 +195,8 @@
                 return Number(obj) === obj && obj % 1 !== 0;
             },
             /**
-             * @desc Check the `obj` is a JSON object or not.
+             * @description Check the `obj` is a JSON object or not.
+             * 
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
              */
@@ -193,7 +206,8 @@
         },
         utility: {
             /**
-             * @desc Getting the `obj` data type
+             * @description Getting the `obj` data type
+             * 
              * @param {any} obj
              * @returns {string} Data type name;
              */
@@ -202,15 +216,16 @@
                     .toString());
             },
             /**
-             * @desc Don't do anything
+             * @description Don't do anything
              */
             noop: function() {},
             /**
-             * @desc Don't do anything
+             * @description Don't do anything
              */
             noOperation: function() {},
             /**
-             * @desc Give the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
+             * @description Give the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
+             * 
              * @param {any} obj
              * @param {any} defaultValue
              * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
@@ -219,7 +234,8 @@
                 return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
             },
             /**
-             * @desc Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
+             * @description Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
+             * 
              * @param {Number} nTime
              * @param {Func} func
              * @returns -
@@ -295,7 +311,7 @@
                 })();
             },
             /**
-             * Including octapush plugin.
+             * @description Including octapush plugin.
              * 
              * @param {string} pluginName. Available command (plugin) is 'string', 'array', 'number', 'datetime'
              * @param {function} callback. A callback which will be processed after loading plugin is done. 
@@ -313,6 +329,12 @@
             }
         },
         ajax: {
+            /**
+             * @description AJAX request
+             * 
+             * @param {object} params. see below for detail.
+             * @returns -
+             */
             request: function(params) {
                 if (_o_.compare.isNullOrEmpty(params) || _o_.compare.isNullOrEmpty(params.url)) return;
                 params = {
