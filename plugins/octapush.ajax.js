@@ -95,7 +95,8 @@
                         // create xhr using higher version
                         for (var i = 0; i < version.length; i++) {
                             try {
-
+                                xhr = new ActiveXObject(version[i]);
+                                
                             } catch (e) {
                                 if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
                                     params.error(e);

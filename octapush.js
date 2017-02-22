@@ -10,49 +10,34 @@
  === Contributors ===
  ... just type your name here after editing the script ...
  */
-
-/**
- * TODO:
- * - ADD AJAX
- * - REVISE utility.extend to support deep merging;
- */
-
-(function (w) {
+(function(w) {
     'use strict';
-    const version = '1.7.02.21';
-
+    const version = '1.7.02.22';
     var internal = {
-        parseAndCallAjax: function (method, params) {
+        parseAndCallAjax: function(method, params) {
             var data = null;
             var success = null;
-
-            if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1]))
-                data = params[1];
-
-            if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1]))
-                success = params[1];
+            if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1])) data = params[1];
+            if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1])) success = params[1];
             else {
                 success = params[2];
             }
-
             params = {
                 url: params[0],
                 data: data || null,
                 method: method,
                 success: success || null
             };
-
             _o_.ajax.request(params);
         }
     };
-
     var _o_ = {
-        /**
-         * @desc Buffer for localization storage.
-         */
         settings: {
             pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
         },
+        /**
+         * @desc Buffer for localization storage.
+         */
         localization: {},
         /**
          * @desc Returning octapushJS core version.
@@ -64,7 +49,7 @@
          * @param {string} char2 [default value is equal character]
          * @returns {string} octapush string art
          */
-        copyleft: function (char1, char2) {
+        copyleft: function(char1, char2) {
             var artPattern = [
                 [0x5c],
                 [0x1e, 0x3, 0x33, 0x3, 0x5],
@@ -80,26 +65,23 @@
                 [0x2b, 0x3, 0x2e],
                 [0x5c]
             ];
-
             var patternChars = [_o_.utility.ifNull(char1, ' '), _o_.utility.ifNull(char2, '=')];
             var str = '';
-
-            artPattern.forEach(function (el, idx, arr) {
+            artPattern.forEach(function(el, idx, arr) {
                 var charMode = true;
                 str += '\n';
-
-                el.forEach(function (el, idx, arr) {
+                el.forEach(function(el, idx, arr) {
                     charMode = !charMode;
-                    str += new Array(el + 1).join(patternChars[charMode ? 0x1 : 0x0]);
+                    str += new Array(el + 1)
+                        .join(patternChars[charMode ? 0x1 : 0x0]);
                 });
             });
-
             return str;
         },
         /**
          * @desc Display octapush string art on browser console.
          */
-        showCopyleft: function () {
+        showCopyleft: function() {
             console.log(_o_.copyleft());
         },
         compare: {
@@ -108,7 +90,7 @@
              * @param {any} obj
              * @returns {bool} returning TRUE if object is null or '' or undefined or array with length 0. Otherwise is FALSE.
              */
-            isNullOrEmpty: function (obj) {
+            isNullOrEmpty: function(obj) {
                 return _o_.compare.isUndefined(obj) || null === obj || '' === obj || 0x0 === obj.length;
             },
             /**
@@ -116,7 +98,7 @@
              * @param {object} obj
              * @returns {bool} returning TRUE if there are no properties inside `obj`. Otherwise is FALSE.
              */
-            isEmpty: function (obj) {
+            isEmpty: function(obj) {
                 for (name in obj) return false;
                 return true;
             },
@@ -125,7 +107,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is UNDEFINED. Otherwise is FALSE.
              */
-            isUndefined: function (obj) {
+            isUndefined: function(obj) {
                 return obj === undefined;
             },
             /**
@@ -133,7 +115,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is DEFINED. Otherwise is FALSE.
              */
-            isDefined: function (obj) {
+            isDefined: function(obj) {
                 return obj !== undefined;
             },
             /**
@@ -141,7 +123,7 @@
              * @param {any} obj
              * @returns {bool} return FALSE if the `obj` is NUMBER. Otherwise is TRUE.
              */
-            isNan: function (obj) {
+            isNan: function(obj) {
                 return isNaN(obj);
             },
             /**
@@ -149,7 +131,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is NUMBER. Otherwise is FALSE.
              */
-            isNumber: function (obj) {
+            isNumber: function(obj) {
                 return !isNaN(obj);
             },
             /**
@@ -157,7 +139,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
-            isFunction: function (obj) {
+            isFunction: function(obj) {
                 return obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}';
             },
             /**
@@ -165,7 +147,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
-            isString: function (obj) {
+            isString: function(obj) {
                 return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
             },
             /**
@@ -173,7 +155,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
-            isBool: function (obj) {
+            isBool: function(obj) {
                 return obj === true || obj === false || obj.__proto__ === '[object Boolean]' || _o_.utility.getType(obj) === 'boolean';
             },
             /**
@@ -181,7 +163,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an array. Otherwise is FALSE.
              */
-            isArray: function (obj) {
+            isArray: function(obj) {
                 return _o_.compare.isUndefined(obj) ? false : Array.isArray(obj);
             },
             /**
@@ -189,7 +171,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an integer. Otherwise is FALSE.
              */
-            isInteger: function (obj) {
+            isInteger: function(obj) {
                 return obj % 0x1 === 0x0;
             },
             /**
@@ -197,7 +179,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is an float. Otherwise is FALSE.
              */
-            isFloat: function (obj) {
+            isFloat: function(obj) {
                 return Number(obj) === obj && obj % 1 !== 0;
             },
             /**
@@ -205,13 +187,8 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
              */
-            isJsonObject: function (obj) {
-                return _o_.compare.isUndefined(obj) ?
-                    false :
-                    (
-                        _o_.compare.isFunction(obj) ?
-                        false : {}.constructor === obj.constructor
-                    )
+            isJsonObject: function(obj) {
+                return _o_.compare.isUndefined(obj) ? false : (_o_.compare.isFunction(obj) ? false : {}.constructor === obj.constructor)
             }
         },
         utility: {
@@ -220,29 +197,26 @@
              * @param {any} obj
              * @returns {string} Data type name;
              */
-            getType: function (obj) {
-                return !arguments ?
-                    null :
-                    (null === obj ? obj + '' : (typeof obj).toString());
+            getType: function(obj) {
+                return !arguments ? null : (null === obj ? obj + '' : (typeof obj)
+                    .toString());
             },
             /**
              * @desc Don't do anything
              */
-            noop: function () {},
+            noop: function() {},
             /**
              * @desc Don't do anything
              */
-            noOperation: function () {},
+            noOperation: function() {},
             /**
              * @desc Give the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              * @param {any} obj
              * @param {any} defaultValue
              * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              */
-            ifNull: function (obj, defaultValue) {
-                return _o_.compare.isNullOrEmpty(arguments) ?
-                    null :
-                    (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
+            ifNull: function(obj, defaultValue) {
+                return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
             },
             /**
              * @desc Execute `func` for `nTime`. In other word, this is simplify for JS native looping.
@@ -250,12 +224,10 @@
              * @param {Func} func
              * @returns -
              */
-            loop: function (nTime, func) {
+            loop: function(nTime, func) {
                 if (!func) return;
-
                 for (var i = 0x0; i < nTime; i++)
-                    if (func && _o_.compare.isFunction(func))
-                        func(i);
+                    if (func && _o_.compare.isFunction(func)) func(i);
             },
             /**
              * @description Do some actions for each element inside `obj`
@@ -265,32 +237,26 @@
              * @param {any} args the arguments to be called by `callback`
              * @returns the original `obj`
              */
-            each: function (obj, callback, args) {
+            each: function(obj, callback, args) {
                 var value = null;
                 var i = 0;
                 var BreakException = {};
-
                 if (callback) {
                     if (args) {
-                        if (_o_.compare.isArray(obj))
-                            obj.forEach(function (val, key) {
-                                value = callback.apply(val, args);
-                                if (false === value) throw BreakException;
-                            });
-
+                        if (_o_.compare.isArray(obj)) obj.forEach(function(val, key) {
+                            value = callback.apply(val, args);
+                            if (false === value) throw BreakException;
+                        });
                         else
                             for (i in obj) {
                                 value = callback.apply(obj[i], args);
                                 if (false === value) break;
                             }
-
                     } else {
-                        if (_o_.compare.isArray(obj))
-                            obj.forEach(function (val, key) {
-                                value = callback.call(val, key, val);
-                                if (false === value) throw BreakException;
-                            });
-
+                        if (_o_.compare.isArray(obj)) obj.forEach(function(val, key) {
+                            value = callback.call(val, key, val);
+                            if (false === value) throw BreakException;
+                        });
                         else
                             for (i in obj) {
                                 value = callback.call(obj[i], i, obj[i]);
@@ -298,7 +264,6 @@
                             }
                     }
                 }
-
                 return obj;
             },
             /**
@@ -309,7 +274,7 @@
              * @param {any} args the arguments to be called by `callback`
              * @returns the original `obj`
              */
-            forEach: function (obj, callback, args) {
+            forEach: function(obj, callback, args) {
                 _o_.utility.each(obj, callback, args)
             },
             /**
@@ -318,18 +283,16 @@
              * @param {object} `objects` The object to be merged.
              * @returns {object} Returning merged object.
              */
-            extend: function (objects) {
+            extend: function(objects) {
                 var argues = arguments;
-                return _o_.compare.isNullOrEmpty(argues) ?
-                    null :
-                    (function () {
-                        Array.prototype.slice.call(argues, 1).forEach(function (source) {
+                return _o_.compare.isNullOrEmpty(argues) ? null : (function() {
+                    Array.prototype.slice.call(argues, 1)
+                        .forEach(function(source) {
                             for (var key in source)
-                                if (source[key] !== undefined)
-                                    objects[key] = source[key]
+                                if (source[key] !== undefined) objects[key] = source[key]
                         });
-                        return objects
-                    })();
+                    return objects
+                })();
             },
             /**
              * Including octapush plugin.
@@ -338,27 +301,20 @@
              * @param {function} callback. A callback which will be processed after loading plugin is done. 
              * @returns -
              */
-            includePlugin: function (pluginName, callback) {
-                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName))
-                    return;
-
-                if (_o_.hasOwnProperty(pluginName))
-                    return;
-
+            includePlugin: function(pluginName, callback) {
+                if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName)) return;
+                if (_o_.hasOwnProperty(pluginName)) return;
                 var pluginFile = ['octapush.', pluginName, '.js'].join('');
                 var pluginUrl = [_o_.settings.pluginsPath, pluginFile].join('');
-
-                _o_.ajax.getScript(pluginUrl, function (xhr) {
+                _o_.ajax.getScript(pluginUrl, function(xhr) {
                     eval(xhr.responseText);
-
                     if (callback) callback();
                 });
             }
         },
         ajax: {
-            request: function (params) {
+            request: function(params) {
                 if (_o_.compare.isNullOrEmpty(params) || _o_.compare.isNullOrEmpty(params.url)) return;
-
                 params = {
                     url: params.url || null,
                     data: params.data || null,
@@ -368,127 +324,76 @@
                     headers: params.headers || {},
                     withCredentials: params.withCredentials || false
                 };
-
                 var xhr = null;
-
                 // BOF: CROSS BROWSER SUPPORT
                 // Chrome/Firefox/Opera/Safari/IE10+
                 if (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest))) {
                     xhr = new XMLHttpRequest();
-
                 } else {
                     // check for XDomainRequest object
                     if (_o_.compare.isDefined(_o_.getType(XDomainRequest))) {
                         xhr = new XDomainRequest();
-
                     } else {
-                        version = [
-                            "MSXML2.XmlHttp.6.0",
-                            "MSXML2.XmlHttp.5.0",
-                            "MSXML2.XmlHttp.4.0",
-                            "MSXML2.XmlHttp.3.0",
-                            "MSXML2.XmlHttp.2.0",
-                            "Microsoft.XmlHttp"
-                        ];
-
+                        version = ["MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"];
                         // create xhr using higher version
                         for (var i = 0; i < version.length; i++) {
-                            try {
-
-                            } catch (e) {
-                                if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
-                                    params.error(e);
+                            try {} catch (e) {
+                                if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error)) params.error(e);
                             }
                         }
                     }
                 }
                 // EOF: CROSS BROWSER SUPPORT
-
-                if (params.method.toLowerCase() === 'get')
-                    params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
-
+                if (params.method.toLowerCase() === 'get') params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
                 xhr.open(params.method, params.url, true);
-
-
                 // use credentials
                 xhr.withCredentials = params.withCredentials;
-
                 // set headers (preflight mode)
-                _o_.utility.each(params.headers, function (key, val) {
-                    if (val)
-                        xhr.setRequestHeader(key, val);
+                _o_.utility.each(params.headers, function(key, val) {
+                    if (val) xhr.setRequestHeader(key, val);
                 });
-
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
-
-                xhr.onreadystatechange = function () {
+                xhr.onreadystatechange = function() {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
                         if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200) {
-                            if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success))
-                                params.success(xhr);
-
+                            if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success)) params.success(xhr);
                         } else {
-                            if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
-                                params.error(xhr);
+                            if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error)) params.error(xhr);
                         }
                     }
                 };
             },
-
             // function (url, callback)
-            getScript: function (url, callback) {
+            getScript: function(url, callback) {
                 _o_.ajax.get(url, function(xhr) {
                     eval(xhr.responseText);
-
-                    if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback)) 
-                        callback(xhr);
+                    if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback)) callback(xhr);
                 });
             },
-
             // function (url, data, success)
-            get: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
-                    _o_.ajax.request(params);
-
-                else
-                    internal.parseAndCallAjax('GET', arguments);
+            get: function(params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
+                else internal.parseAndCallAjax('GET', arguments);
             },
-
             // function (url, data, success)
-            post: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
-                    _o_.ajax.request(params);
-
-                else
-                    internal.parseAndCallAjax('POST', arguments);
+            post: function(params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
+                else internal.parseAndCallAjax('POST', arguments);
             },
-
-            put: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
-                    _o_.ajax.request(params);
-
-                else
-                    internal.parseAndCallAjax('PUT', arguments);
+            put: function(params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
+                else internal.parseAndCallAjax('PUT', arguments);
             },
-
-            delete: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
-                    _o_.ajax.request(params);
-
-                else
-                    internal.parseAndCallAjax('DELETE', arguments);
+            delete: function(params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
+                else internal.parseAndCallAjax('DELETE', arguments);
             },
-
-            patch: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params))
-                    _o_.ajax.request(params);
-
-                else
-                    internal.parseAndCallAjax('PATCH', arguments);
+            patch: function(params) {
+                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
+                else internal.parseAndCallAjax('PATCH', arguments);
             }
         }
     };
-
     _o_.showCopyleft();
     w.octapushJS = w._o_ = _o_;
 })(window);
