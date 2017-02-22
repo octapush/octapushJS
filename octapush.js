@@ -394,6 +394,7 @@
             // function (url, callback)
             getScript: function(url, callback) {
                 _o_.ajax.get(url, function(xhr) {
+                    console.log(xhr.responseText);
                     eval(xhr.responseText);
                     if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback)) callback(xhr);
                 });
