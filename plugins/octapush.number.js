@@ -13,7 +13,7 @@
 (function (w) {
     'use strict';
     if (!w.octapushJS || !w._o_) {
-        alert('octapushJS.number has dependency with "octapush.js". Please add the file first.');
+        console.log('octapushJS.number has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {

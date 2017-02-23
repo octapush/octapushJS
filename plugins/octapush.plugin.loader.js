@@ -1,5 +1,5 @@
 /*
- === octapushJS.pluginLoader ===
+ === octapushJS.resourceLoader ===
  Author  : Fadhly Permata
  eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
@@ -12,8 +12,8 @@
  */
 (function (w) {
     'use strict';
-    if (!window.octapushJS || !window._o_) {
-        alert('octapushJS.pluginLoader has dependency with "octapush.js". Please add the file first.');
+    if (!w.octapushJS || !w._o_) {
+        console.log('octapushJS.resourceLoader has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
@@ -29,19 +29,45 @@
                     messagingSenderId: "441046979808"
                 }
             },
-            init: function () {
-                _o_.ajax.getScript("https://www.gstatic.com/firebasejs/3.6.10/firebase.js", function(xhr) {
-                    console.log(xhr.responseText);
-                });
+            errorHandler: function(errText, func) {
+                if (_o_.compare.isNullOrEmpty(func) && _o_.compare.isFunction(func))
+                    func(errText);
+                else
+                    console.log(errText);
+            },
+            resourceLoader: function (options) {
+                options = {
+                    url: options.url || null,
+                    parameters: options.parameters || null,
+                    attributes: options.attributes || null,
+                    onSuccess: options.onSuccess || null,
+                    onError: options.onError || null,
+                    type: _o_.utility.ifNull(options.type, 'script') /* [ 'script', 'style' ] */
+                };
+
+                if (_o_.compare.isNullOrEmpty(options.url)) {
+                    internal.errorHandler('Error calling resourceLoader():\nInvalid supplied URL.', options.onError);
+                    return;
+                }
+
+                options.type = options.type.toLowerCase();
+                var res = null;
+                if (options.type === 'script') {
+                    res = document.createElement('sccript');
+                    res.type = 'text/javascript',
+                    res.src = options.url + (_o_.compare.isNullOrEmpty(options.parameters) ? '' : ('?'))
+                }
             }
         };
 
-        _o_.pluginLoader = Object.assign(_o_.utility.ifNull(_o_.pluginLoader, {}), {
-            settings: {
-                initialized: false,
-                loadedPlugin: []
-            },
-            version: version
-        });
+        internal.init.apply();
+
+        // _o_.resourceLoader = Object.assign(_o_.utility.ifNull(_o_.resourceLoader, {}), {
+        //     settings: {
+        //         initialized: false,
+        //         loadedPlugin: []
+        //     },
+        //     version: version
+        // });
     }
 })(window);

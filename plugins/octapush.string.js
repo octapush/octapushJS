@@ -33,7 +33,7 @@
 (function (w) {
     'use strict';
     if (!w.octapushJS || !w._o_) {
-        alert('octapushJS.string has dependency with "octapush.js". Please add the file first.');
+        console.log('octapushJS.string has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {

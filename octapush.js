@@ -321,13 +321,12 @@
              * @param {function} callback. A callback which will be processed after loading plugin is done. 
              * @returns -
              */
-            includePlugin: function(pluginName, callback) {
+            importPlugin: function(pluginName, callback) {
                 if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName)) return;
                 if (_o_.hasOwnProperty(pluginName)) return;
                 var pluginFile = ['octapush.', pluginName, '.js'].join('');
                 var pluginUrl = [_o_.settings.pluginsPath, pluginFile].join('');
                 _o_.ajax.getScript(pluginUrl, function(xhr) {
-                    eval(xhr.responseText);
                     if (callback) callback();
                 });
             }
@@ -394,7 +393,6 @@
             // function (url, callback)
             getScript: function(url, callback) {
                 _o_.ajax.get(url, function(xhr) {
-                    console.log(xhr.responseText);
                     eval(xhr.responseText);
                     if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback)) callback(xhr);
                 });
