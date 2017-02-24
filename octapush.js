@@ -151,7 +151,7 @@
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
             isFunction: function(obj) {
-                return obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}';
+                return _o_.compare.isDefined(obj) && (obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}');
             },
             /**
              * @description Check the `obj` is a string or not.
