@@ -19,6 +19,26 @@
     } else {
         const version = '1.7.02.23';
 
+        var internal = {
+            versionCompare: function (a, b) {
+                var i, cmp, len, re = /(\.0)+[^\.]*$/;
+                a = (a + '').replace(re, '').split('.');
+                b = (b + '').replace(re, '').split('.');
+                len = Math.min(a.length, b.length);
+                for (i = 0; i < len; i++) {
+                    cmp = parseInt(a[i], 10) - parseInt(b[i], 10);
+                    if (cmp !== 0) return cmp;
+                }
+                return a.length - b.length;
+            },
+            gteVersion: function (a, b) {
+                return internal.versionCompare(a, b) >= 0;
+            },
+            lteVersion: function (a, b) {
+                return internal.versionCompare(a, b) < 0;
+            }
+        };
+
         _o_.utility = Object.assign(_o_.utility, {
             errorHandler: function (errText, func) {
                 if (!_o_.compare.isNullOrEmpty(func) && _o_.compare.isFunction(func))
@@ -39,19 +59,19 @@
                     messagingSenderId: "441046979808"
                 }
             },
-            model: {
+            models: {
                 pluginItem: function (data) {
-                    return {
-                        name: data.name || null,
-                        description: data.description || null,
-                        version: data.version || null,
-                        keywords: data.keywords || [],
-                        dependencies: data.dependencies || [],
+                    return _o_.utility.extend({
+                        name: null,
+                        description: null,
+                        version: '0',
+                        keywords: [],
+                        dependencies: [],
                         files: {
-                            script: [],
+                            scripts: [],
                             styles: []
                         }
-                    };
+                    }, data);
                 }
             },
             load: function (options) {
@@ -143,35 +163,33 @@
                             .ref('plugin-list')
                             .orderByChild('name')
                             .equalTo(resName)
-                            //.on('child_added', function (data) {
                             .on('value', function (data) {
-                                //var plugin = _o_.webResource.model.pluginItem(data.val());
-                                //console.log(plugin);
+                                var plugin = _o_.webResource.models.pluginItem({});;
 
-                                var plugin = null;
-
-                                // take the data which equal with resVersion
-                                if (!_o_.compare.isNullOrEmpty(resVersion)) {
-                                    data.forEach(function (item) {
-                                        plugin = _o_.webResource.model.pluginItem(item.val());
+                                data.forEach(function (item) {
+                                    if (!_o_.compare.isNullOrEmpty(resVersion)) {
+                                        plugin = _o_.webResource.models.pluginItem(item.val());
                                         if (plugin.version.toLowerCase() == resVersion.toLowerCase()) {
                                             return;
                                         }
-                                    });
 
-                                // take the latest version.
-                                } else {
+                                    } else {
+                                        var cVer = plugin.version;
+                                        var iVer = item.val().version;
 
-                                }
+                                        if (internal.lteVersion(cVer, iVer)) {
+                                            plugin = _o_.webResource.models.pluginItem(item.val());
+                                        }
+                                    }
+                                });
 
                                 console.log(plugin);
-                                console.log(parseFloat(plugin.version, 4));
                             });
                     }
                 });
             }
         });
 
-        _o_.webResource.getResource('jQuery', '1.12.4');
+        _o_.webResource.getResource('jQuery');
     }
 })(window);
