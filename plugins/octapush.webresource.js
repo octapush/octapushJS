@@ -17,7 +17,7 @@
         return;
 
     } else {
-        const version = '1.7.02.23';
+        const version = '1.7.02.24';
 
         var internal = {
             versionCompare: function (a, b) {

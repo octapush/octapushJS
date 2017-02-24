@@ -16,7 +16,7 @@
     // attach to window first
     w.octapushJS = w._o_ = {};
 
-    const version = '1.7.02.22';
+    const version = '1.7.02.24';
     var internal = {
         parseAndCallAjax: function (method, params) {
             var data = null;
