@@ -4,8 +4,8 @@
 <head>
 	<meta charset="utf-8" />
 	<title>octapush - WRLoader</title>
-	<script type="text/javascript" src="../../octapush.js"></script>
-	<script type="text/javascript" src="../../plugins/octapush.ajax.js"></script>
+	<script src="../../octapush.js"></script>
+	<script src="../../plugins/octapush.ajax.js"></script>
 	<script type="text/javascript">
 		(function () {
 			// _o_.ajax.request({
@@ -22,16 +22,20 @@
 			_o_.ajax.post(
 				'http://html5rocks-cors.s3-website-us-east-1.amazonaws.com/index.html',
 				null,
-				function (xhr) {console.log(xhr.responseText);},
-				function (xhr) {console.log(xhr);}
+				function (xhr) {
+					console.log(xhr.responseText);
+				},
+				function (xhr) {
+					console.log(xhr);
+				}
 			);
 
-			_o_.ajax.get(
-				'https://reqres.in/api/users',
-				null,
-				function (xhr) {console.log(xhr.responseText);},
-				function (xhr) {console.log(xhr);}
-			);
+			// _o_.ajax.get(
+			// 	'https://reqres.in/api/users',
+			// 	null,
+			// 	function (xhr) {console.log(xhr.responseText);},
+			// 	function (xhr) {console.log(xhr);}
+			// );
 
 			// _o_.ajax.post(
 			// 	'https://reqres.in/api/users',

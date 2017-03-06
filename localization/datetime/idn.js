@@ -1,7 +1,7 @@
 /*
  === octapushJS.localization.datetime ===
  Author  : Fadhly Permata
- eMail   : - fadhly.permata@gmail.com
+ eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
 
  === Credits ===
@@ -13,7 +13,7 @@
 (function (w) {
     'use strict';
     if (!w.octapushJS || !w._o_) {
-        alert('octapushJS.localization.datetime has dependency with "octapush.js". Please add the file first.');
+        console.log('octapushJS.localization.datetime has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
