@@ -1,4 +1,4 @@
 // Place your settings in this file to overwrite default and user settings.
 {
-    "http.proxy": "http://10.49.88.30:8083",
+    "http.proxy": "http://10.49.88.30:8083"
 }
