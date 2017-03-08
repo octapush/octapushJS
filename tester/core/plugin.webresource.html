@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>octapush - WRLoader</title>
+
+	<script type="text/javascript" src="../../octapush.js"></script>
+	<script type="text/javascript">
+		(function() {
+            _o_.settings.pluginsPath = 'http://localhost:81/octapushJS/plugins/';
+            _o_.utility.importPlugin('webresource', function(){
+                
+                _o_.webResource.getResource({
+                    name: 'jQuery',
+                    version: '2.2.4'
+                });
+
+
+            });
+        })();
+	</script>
+</head>
+<body>
+    <div class="row">
+        <div class="col-md-6">col 1</div>
+        <div class="col-md-6">col 2</div>
+    </div>
+</body>
+</html>

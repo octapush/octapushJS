@@ -150,7 +150,13 @@
                     _o_.utility.errorHandler(e, options.onError);
                 }
             },
-            getResource: function (resName, resVersion) {
+            getResource: function (param) {
+                param = {
+                    name: param.name || null,
+                    version: param.version || null,
+                    onSuccess: param.onSuccess || null
+                };
+
                 // prepare for fb resource: database
                 _o_.webResource.load({
                     url: 'https://www.gstatic.com/firebasejs/3.6.2/firebase.js',
@@ -162,34 +168,74 @@
                             .database()
                             .ref('plugin-list')
                             .orderByChild('name')
-                            .equalTo(resName)
+                            .equalTo(param.name)
                             .on('value', function (data) {
                                 var plugin = _o_.webResource.models.pluginItem({});;
 
                                 data.forEach(function (item) {
-                                    if (!_o_.compare.isNullOrEmpty(resVersion)) {
-                                        plugin = _o_.webResource.models.pluginItem(item.val());
-                                        if (plugin.version.toLowerCase() == resVersion.toLowerCase()) {
-                                            return;
-                                        }
+                                    if (!_o_.compare.isNullOrEmpty(param.version))
+                                        if (item.val().version.toLowerCase() === param.version.toLowerCase())
+                                            plugin = _o_.webResource.models.pluginItem(item.val());
+
+                                    else
+                                        if (internal.lteVersion(plugin.version, item.val().version))
+                                            plugin = _o_.webResource.models.pluginItem(item.val());
+                                });
+
+                                // TODO:
+                                // + ADD DEPENDENCY LOAD
+                                if (plugin.hasOwnProperty('dependencies') && plugin.dependencies.length > 0) {
+                                    // _o_.utility.each(plugin.dependencies, function(key, val) {
+                                    //     _o_.webResource.getResource(val.name, val.version || null);
+                                    // });
+                                }
+
+                                // GET THE FILES: SCRIPTS
+                                _o_.utility.each(plugin.files.scripts, function (key, val) {
+                                    if (_o_.compare.isJsonObject(val)) {
+                                        var attrs = {};
+                                        _o_.utility.each(val, function (k, v) {
+                                            if (k.toLowerCase() !== 'url')
+                                                attrs[k] = v;
+                                        });
+
+                                        _o_.webResource.load({
+                                            url: val.url,
+                                            attributes: attrs
+                                        });
 
                                     } else {
-                                        var cVer = plugin.version;
-                                        var iVer = item.val().version;
-
-                                        if (internal.lteVersion(cVer, iVer)) {
-                                            plugin = _o_.webResource.models.pluginItem(item.val());
-                                        }
+                                        _o_.webResource.load({
+                                            url: val
+                                        });
                                     }
                                 });
 
-                                console.log(plugin);
+                                // GET THE FILES: STYLES
+                                _o_.utility.each(plugin.files.styles, function (key, val) {
+                                    if (_o_.compare.isJsonObject(val)) {
+                                        var attrs = {};
+                                        _o_.utility.each(val, function (k, v) {
+                                            if (k.toLowerCase() !== 'url')
+                                                attrs[k] = v;
+                                        });
+
+                                        _o_.webResource.load({
+                                            url: val.url,
+                                            attributes: attrs,
+                                            type: 'style'
+                                        });
+
+                                    } else {
+                                        _o_.webResource.load({
+                                            url: val
+                                        });
+                                    }
+                                });
                             });
                     }
                 });
             }
         });
-
-        _o_.webResource.getResource('jQuery');
     }
 })(window);
