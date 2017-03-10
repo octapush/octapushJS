@@ -178,7 +178,9 @@
              * @returns {bool} return TRUE if the `obj` is an array. Otherwise is FALSE.
              */
             isArray: function (obj) {
-                return _o_.compare.isUndefined(obj) ? false : Array.isArray(obj);
+                return _o_.compare.isUndefined(obj)
+                    ? false
+                    : Array.isArray(obj);
             },
             /**
              * @description Check the `obj` is an integer or not.
@@ -205,7 +207,13 @@
              * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
              */
             isJsonObject: function (obj) {
-                return _o_.compare.isUndefined(obj) ? false : (_o_.compare.isFunction(obj) ? false : {}.constructor === obj.constructor)
+                return _o_.compare.isUndefined(obj)
+                    ? false
+                    : (
+                        _o_.compare.isFunction(obj)
+                            ? false
+                            : {}.constructor === obj.constructor
+                    )
             }
         },
         utility: {
@@ -216,17 +224,22 @@
              * @returns {string} Data type name;
              */
             getType: function (obj) {
-                return !arguments ? null : (null === obj ? obj + '' : (typeof obj)
-                    .toString());
+                return !arguments
+                    ? null
+                    : (
+                        null === obj
+                            ? obj + ''
+                            : (typeof obj).toString()
+                    );
             },
             /**
              * @description Don't do anything
              */
-            noop: function () {},
+            noop: function () { },
             /**
              * @description Don't do anything
              */
-            noOperation: function () {},
+            noOperation: function () { },
             /**
              * @description Give the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              * 
@@ -235,7 +248,13 @@
              * @returns {any}  Return the `defaultValue` if `obj` is NULL. Otherwise, give the `obj` value.
              */
             ifNull: function (obj, defaultValue) {
-                return _o_.compare.isNullOrEmpty(arguments) ? null : (!_o_.compare.isNullOrEmpty(obj) ? obj : defaultValue);
+                return _o_.compare.isNullOrEmpty(arguments)
+                    ? null
+                    : (
+                        !_o_.compare.isNullOrEmpty(obj)
+                            ? obj
+                            : defaultValue
+                    );
             },
             /**
              * @description Execute `func` for `nTime`. In other word, this is simplify for JS native looping.

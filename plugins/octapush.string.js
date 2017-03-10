@@ -32,7 +32,7 @@
 
 (function (w) {
     'use strict';
-    if (!w.octapushJS || !w._o_) {
+    if (!w._o_) {
         console.log('octapushJS.string has dependency with "octapush.js". Please add the file first.');
         return;
 
