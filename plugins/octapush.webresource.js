@@ -172,7 +172,7 @@
                             .on('value', function (data) {
                                 var plugin = _o_.webResource.models.pluginItem({});;
 
-                                data.forEach(function (item) {
+                                _o_.utility.each(data, function(item){
                                     if (!_o_.compare.isNullOrEmpty(param.version))
                                         if (item.val().version.toLowerCase() === param.version.toLowerCase())
                                             plugin = _o_.webResource.models.pluginItem(item.val());

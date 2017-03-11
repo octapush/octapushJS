@@ -75,14 +75,17 @@
                 [0x2b, 0x3, 0x2e],
                 [0x5c]
             ];
+
             var patternChars = [_o_.utility.ifNull(char1, ' '), _o_.utility.ifNull(char2, '=')];
             var str = '';
-            artPattern.forEach(function (el, idx, arr) {
+
+            _o_.utility.each(artPattern, function (key, val) {
                 var charMode = true;
                 str += '\n';
-                el.forEach(function (el, idx, arr) {
+
+                _o_.utility.each(val, function (idx, value) {
                     charMode = !charMode;
-                    str += new Array(el + 1).join(patternChars[charMode ? 0x1 : 0x0]);
+                    str += new Array(value + 1).join(patternChars[charMode ? 0x1 : 0x0]);
                 });
             });
             return str;

@@ -411,9 +411,9 @@
                             str :
                             (function () {
                                 all = _o_.utility.ifNull(all, true);
-                                arrSearch.forEach(function (val, key) {
+                                _o_.utility.each(arrSearch, function(key, val) {
                                     str = _o_.string.replace(str, val, arrReplace[key]);
-                                });
+                                })
 
                                 return str;
                             })()
@@ -549,7 +549,7 @@
                     (function () {
                         var sHex = '';
 
-                        _o_.string.toCharsArray(str).forEach(function (chr) {
+                        _o_.utility.each(_o_.string.toCharsArray(str), function (chr) {
                             sHex += _o_.string.concat(
                                 '\\x',
                                 chr.charCodeAt(0x0).toString(0x10).toUpperCase()
@@ -576,7 +576,7 @@
                     (function () {
                         var sUnc = '';
 
-                        _o_.string.toCharsArray(str).forEach(function (element) {
+                        _o_.utility.each(_o_.string.toCharsArray(str), function (element) {
                             sUnc += _o_.string.concat('\\u00', element.charCodeAt(0x0).toString(0x10).toUpperCase());
                         });
 
@@ -606,7 +606,7 @@
                     (function () {
                         var cCode = _o_.string.toCharsCode(str);
 
-                        cCode.forEach(function (value, key) {
+                        _o_.utility.each(cCode, function (value, key) {
                             cCode[key] = value + shiftCounter;
                         });
 

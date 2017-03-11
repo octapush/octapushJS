@@ -6,36 +6,10 @@
 	<title>octapush - WRLoader</title>
 
 	<script type="text/javascript" src="../../octapush.js"></script>
-	<script type="text/javascript" src="../../plugins/octapush.array.js"></script>
+	<script type="text/javascript" src="../../plugins/octapush.string.js"></script>
 	<script type="text/javascript">
 		(function () {
-			var abc = {
-				a: 1,
-				b: {
-					c: 2,
-					d: 3
-				},
-				e: [1, 2, 3, 4, 5]
-			};
-
-			var bcd = {
-				b: {
-					f: 1,
-					g: 2,
-					h: {
-						i: {
-							j: 1,
-							k: 2,
-							l: 3,
-							m: [1, 2, 3, 4, 5]
-						},
-						n: [1, 2, 3, 4, 5]
-					}
-				},
-				o: 1
-			};
-
-			console.log(_o_.utility.extend(abc, bcd, {a: 2, p: [1,2 ,3, 4]}));
+			console.log(_o_.string.replaces('fadhly permata', ['a', 'd'], ['b', 'e']));
 		})();
 	</script>
 </head>
