@@ -39,7 +39,7 @@
     } else {
         const version = '1.7.02.15';
 
-        _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
+        _o_.string = _o_.utility.extend(_o_.utility.ifNull(_o_.string, {}), {
             /**
              *  Returning octapushJS.string version.
              */

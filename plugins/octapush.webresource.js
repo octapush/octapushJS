@@ -39,7 +39,7 @@
             }
         };
 
-        _o_.utility = Object.assign(_o_.utility, {
+        _o_.utility = _o_.utility.extend(_o_.utility, {
             errorHandler: function (errText, func) {
                 if (!_o_.compare.isNullOrEmpty(func) && _o_.compare.isFunction(func))
                     func(errText);
@@ -49,7 +49,7 @@
             }
         });
 
-        _o_.webResource = Object.assign(_o_.utility.ifNull(_o_.webResource, {}), {
+        _o_.webResource = _o_.utility.extend(_o_.utility.ifNull(_o_.webResource, {}), {
             settings: {
                 fbConfig: {
                     apiKey: "AIzaSyC2fZ8eIwF8DzFcelp_qh9FLI01Q8o70g0",
@@ -192,7 +192,7 @@
 
                                 // GET THE FILES: SCRIPTS
                                 _o_.utility.each(plugin.files.scripts, function (key, val) {
-                                    if (_o_.compare.isJsonObject(val)) {
+                                    if (_o_.compare.isObject(val)) {
                                         var attrs = {};
                                         _o_.utility.each(val, function (k, v) {
                                             if (k.toLowerCase() !== 'url')
@@ -213,7 +213,7 @@
 
                                 // GET THE FILES: STYLES
                                 _o_.utility.each(plugin.files.styles, function (key, val) {
-                                    if (_o_.compare.isJsonObject(val)) {
+                                    if (_o_.compare.isObject(val)) {
                                         var attrs = {};
                                         _o_.utility.each(val, function (k, v) {
                                             if (k.toLowerCase() !== 'url')

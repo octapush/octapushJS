@@ -19,7 +19,7 @@
     } else {
         const version = '1.7.02.13';
 
-        _o_.number = Object.assign(_o_.utility.ifNull(_o_.number, {}), {
+        _o_.number = _o_.utility.extend(_o_.utility.ifNull(_o_.number, {}), {
             version: version,
             isOdd: function (num) {
                 return num % 2 === 1;

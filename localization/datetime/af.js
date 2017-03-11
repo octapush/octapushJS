@@ -17,7 +17,7 @@
         return;
 
     } else {
-        _o_.localization.datetime = Object.assign(_o_.utility.ifNull(_o_.localization.datetime, {}), {
+        _o_.localization.datetime = _o_.utility.extend(_o_.utility.ifNull(_o_.localization.datetime, {}), {
             'IDN': {
                 localizationName: 'Afrikaans',
                 translator: 'Fadhly Permata',

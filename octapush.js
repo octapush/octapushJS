@@ -14,27 +14,33 @@
     'use strict';
 
     // attach to window first
-    w.octapushJS = w._o_ = {};
+    w._o_ = {};
 
-    const version = '1.7.02.24';
+    const version = '1.7.03.11';
     var internal = {
         parseAndCallAjax: function (method, params) {
             var data = null;
             var success = null;
-            if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1])) data = params[1];
-            if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1])) success = params[1];
-            else {
+
+            if (!_o_.compare.isNullOrEmpty(params[1]) && !_o_.compare.isFunction(params[1]))
+                data = params[1];
+
+            if (!_o_.compare.isNullOrEmpty(params[1]) && _o_.compare.isFunction(params[1]))
+                success = params[1];
+            else
                 success = params[2];
-            }
+
             params = {
                 url: params[0],
                 data: data || null,
                 method: method,
                 success: success || null
             };
+
             _o_.ajax.request(params);
         }
     };
+
     _o_ = {
         settings: {
             pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
@@ -76,8 +82,7 @@
                 str += '\n';
                 el.forEach(function (el, idx, arr) {
                     charMode = !charMode;
-                    str += new Array(el + 1)
-                        .join(patternChars[charMode ? 0x1 : 0x0]);
+                    str += new Array(el + 1).join(patternChars[charMode ? 0x1 : 0x0]);
                 });
             });
             return str;
@@ -96,7 +101,13 @@
              * @returns {bool} returning TRUE if object is null or '' or undefined or array with length 0. Otherwise is FALSE.
              */
             isNullOrEmpty: function (obj) {
-                return _o_.compare.isUndefined(obj) || null === obj || '' === obj || 0x0 === obj.length;
+                return _o_.compare.isUndefined(obj)
+                    ||
+                    null === obj
+                    ||
+                    '' === obj
+                    ||
+                    0x0 === obj.length;
             },
             /**
              * @description Check the `obj` is having properties or not.
@@ -151,7 +162,15 @@
              * @returns {bool} return TRUE if the `obj` is a JS function. Otherwise is FALSE.
              */
             isFunction: function (obj) {
-                return _o_.compare.isDefined(obj) && (obj instanceof Function || _o_.utility.getType(obj) === 'function' || obj.__proto__.toString() === 'function () {\n}');
+                return _o_.compare.isDefined(obj)
+                    &&
+                    (
+                        obj instanceof Function
+                        ||
+                        _o_.utility.getType(obj) === 'function'
+                        ||
+                        obj.__proto__.toString() === 'function () {\n}'
+                    );
             },
             /**
              * @description Check the `obj` is a string or not.
@@ -160,7 +179,9 @@
              * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
             isString: function (obj) {
-                return obj.__proto__ === '[object String]' || _o_.utility.getType(obj) === 'string';
+                return obj.__proto__ === '[object String]'
+                    ||
+                    _o_.utility.getType(obj) === 'string';
             },
             /**
              * @description Check the `obj` is a boolean or not.
@@ -169,7 +190,13 @@
              * @returns {bool} return TRUE if the `obj` is a boolean. Otherwise is FALSE.
              */
             isBool: function (obj) {
-                return obj === true || obj === false || obj.__proto__ === '[object Boolean]' || _o_.utility.getType(obj) === 'boolean';
+                return obj === true
+                    ||
+                    obj === false
+                    ||
+                    obj.__proto__ === '[object Boolean]'
+                    ||
+                    _o_.utility.getType(obj) === 'boolean';
             },
             /**
              * @description Check the `obj` is an array or not.
@@ -198,7 +225,9 @@
              * @returns {bool} return TRUE if the `obj` is an float. Otherwise is FALSE.
              */
             isFloat: function (obj) {
-                return Number(obj) === obj && obj % 1 !== 0;
+                return Number(obj) === obj
+                    &&
+                    obj % 1 !== 0;
             },
             /**
              * @description Check the `obj` is a JSON object or not.
@@ -206,7 +235,7 @@
              * @param {any} obj
              * @returns {bool} return TRUE if the `obj` is a JSON object. Otherwise is FALSE.
              */
-            isJsonObject: function (obj) {
+            isObject: function (obj) {
                 return _o_.compare.isUndefined(obj)
                     ? false
                     : (
@@ -280,8 +309,8 @@
                 var value = null;
                 var i = 0;
                 var BreakException = {};
-                if (callback) {
-                    if (args) {
+                if (callback)
+                    if (args)
                         if (_o_.compare.isArray(obj)) obj.forEach(function (val, key) {
                             value = callback.apply(val, args);
                             if (false === value) throw BreakException;
@@ -291,7 +320,7 @@
                                 value = callback.apply(obj[i], args);
                                 if (false === value) break;
                             }
-                    } else {
+                    else
                         if (_o_.compare.isArray(obj)) obj.forEach(function (val, key) {
                             value = callback.call(val, key, val);
                             if (false === value) throw BreakException;
@@ -301,8 +330,7 @@
                                 value = callback.call(obj[i], i, obj[i]);
                                 if (false === value) break;
                             }
-                    }
-                }
+
                 return obj;
             },
             /**
@@ -322,25 +350,26 @@
              * @param {object} `objects` The object to be merged.
              * @returns {object} Returning merged object.
              */
-            // extend: function(objects) {
-            //     var argues = arguments;
-            //     return _o_.compare.isNullOrEmpty(argues) ? null : (function() {
-            //         Array.prototype.slice.call(argues, 1)
-            //             .forEach(function(source) {
-            //                 for (var key in source)
-            //                     if (source[key] !== undefined) objects[key] = source[key]
-            //             });
-            //         return objects
-            //     })();
-            // },
             extend: function (oldData, patch) {
-                for (var prop in patch)
-                    if (patch[prop] && patch[prop].constructor && patch[prop].constructor === Object)
-                        oldData[prop] = _o_.utility.extend(oldData[prop], patch[prop]);
-                    else
-                        oldData[prop] = patch[prop];
+                var argues = arguments;
 
-                return oldData;
+                _o_.utility.each(argues, function (i) {
+                    if (i === 0) return;
+
+                    _o_.utility.each(argues[i], function (key, val) {
+                        if (_o_.compare.isObject(val)) {
+                            if (_o_.compare.isNullOrEmpty(argues[0][key]))
+                                argues[0][key] = {};
+
+                            argues[0][key] = _o_.utility.extend(argues[0][key], val);
+
+                        } else {
+                            argues[0][key] = val;
+                        }
+                    });
+                });
+
+                return argues[0];
             },
             /**
              * @description Including octapush plugin.
@@ -352,11 +381,20 @@
             importPlugin: function (pluginName, callback) {
                 if (_o_.compare.isNullOrEmpty(arguments) || _o_.compare.isNullOrEmpty(pluginName)) return;
                 if (_o_.hasOwnProperty(pluginName)) return;
-                var pluginFile = ['octapush.', pluginName, '.js'].join('');
-                var pluginUrl = [_o_.settings.pluginsPath, pluginFile].join('');
-                _o_.ajax.getScript(pluginUrl, function (xhr) {
-                    if (callback) callback();
-                });
+
+                _o_.ajax.getScript(
+                    [
+                        _o_.settings.pluginsPath,
+                        [
+                            'octapush.',
+                            pluginName,
+                            '.js'
+                        ].join('')
+                    ].join(''),
+                    function (xhr) {
+                        if (callback) callback();
+                    }
+                );
             }
         },
         ajax: {
@@ -368,6 +406,7 @@
              */
             request: function (params) {
                 if (_o_.compare.isNullOrEmpty(params) || _o_.compare.isNullOrEmpty(params.url)) return;
+
                 params = {
                     url: params.url || null,
                     data: params.data || null,
@@ -377,44 +416,60 @@
                     headers: params.headers || {},
                     withCredentials: params.withCredentials || false
                 };
+
                 var xhr = null;
-                // BOF: CROSS BROWSER SUPPORT
+
+
+                // CROSS BROWSER SUPPORT
                 // Chrome/Firefox/Opera/Safari/IE10+
-                if (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest))) {
+                if (_o_.compare.isDefined(_o_.utility.getType(XMLHttpRequest)))
                     xhr = new XMLHttpRequest();
-                } else {
+
+                // IE support
+                else
                     // check for XDomainRequest object
-                    if (_o_.compare.isDefined(_o_.getType(XDomainRequest))) {
+                    if (_o_.compare.isDefined(_o_.getType(XDomainRequest)))
                         xhr = new XDomainRequest();
-                    } else {
+                    else {
                         version = ["MSXML2.XmlHttp.6.0", "MSXML2.XmlHttp.5.0", "MSXML2.XmlHttp.4.0", "MSXML2.XmlHttp.3.0", "MSXML2.XmlHttp.2.0", "Microsoft.XmlHttp"];
                         // create xhr using higher version
-                        for (var i = 0; i < version.length; i++) {
+                        for (var i = 0; i < version.length; i++)
                             try {
                                 xhr = new ActiveXObject(version[i]);
                             } catch (e) {
                                 if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error)) params.error(e);
                             }
-                        }
                     }
-                }
-                // EOF: CROSS BROWSER SUPPORT
+
+
+                // PARSING & OPEN XHR
                 if (params.method.toLowerCase() === 'get') params.url = params.url + (_o_.compare.isNullOrEmpty(params.data) ? '' : '?' + params.data);
                 xhr.open(params.method, params.url, true);
-                // use credentials
+
+
+                // support credentials
                 xhr.withCredentials = params.withCredentials;
+
+
                 // set headers (preflight mode)
                 _o_.utility.each(params.headers, function (key, val) {
                     if (val) xhr.setRequestHeader(key, val);
                 });
+
+
+                // send request
                 xhr.send(params.method.toLowerCase() === 'get' ? null : params.data);
+
+
+                // attach events                
                 xhr.onreadystatechange = function () {
                     if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200) {
-                            if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success)) params.success(xhr);
-                        } else {
-                            if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error)) params.error(xhr);
-                        }
+                        if (xhr.status === 200 || xhr.status === 201 || xhr.status === 200)
+                            if (!_o_.compare.isNullOrEmpty(params.success) && _o_.compare.isFunction(params.success))
+                                params.success(xhr);
+                            else
+                                if (!_o_.compare.isNullOrEmpty(params.error) && _o_.compare.isFunction(params.error))
+                                    params.error(xhr);
                     }
                 };
             },
@@ -422,35 +477,47 @@
             getScript: function (url, callback) {
                 _o_.ajax.get(url, function (xhr) {
                     eval(xhr.responseText);
-                    if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback)) callback(xhr);
+                    if (!_o_.compare.isNullOrEmpty(callback) && _o_.compare.isFunction(callback))
+                        callback(xhr);
                 });
             },
             // function (url, data, success)
             get: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
-                else internal.parseAndCallAjax('GET', arguments);
+                if (arguments.length == 1 && _o_.compare.isObject(params))
+                    _o_.ajax.request(params);
+                else
+                    internal.parseAndCallAjax('GET', arguments);
             },
             // function (url, data, success)
             post: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
-                else internal.parseAndCallAjax('POST', arguments);
+                if (arguments.length == 1 && _o_.compare.isObject(params))
+                    _o_.ajax.request(params);
+                else
+                    internal.parseAndCallAjax('POST', arguments);
             },
             // function (url, data, success)
             put: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
-                else internal.parseAndCallAjax('PUT', arguments);
+                if (arguments.length == 1 && _o_.compare.isObject(params))
+                    _o_.ajax.request(params);
+                else
+                    internal.parseAndCallAjax('PUT', arguments);
             },
             // function (url, data, success)
             delete: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
-                else internal.parseAndCallAjax('DELETE', arguments);
+                if (arguments.length == 1 && _o_.compare.isObject(params))
+                    _o_.ajax.request(params);
+                else
+                    internal.parseAndCallAjax('DELETE', arguments);
             },
             // function (url, data, success)
             patch: function (params) {
-                if (arguments.length == 1 && _o_.compare.isJsonObject(params)) _o_.ajax.request(params);
-                else internal.parseAndCallAjax('PATCH', arguments);
+                if (arguments.length == 1 && _o_.compare.isObject(params))
+                    _o_.ajax.request(params);
+                else
+                    internal.parseAndCallAjax('PATCH', arguments);
             }
         }
     };
+
     _o_.showCopyleft();
 })(window);

@@ -26,7 +26,7 @@
         const version = '1.7.02.13';
 
         // BOF: LOCALIZATION 
-        _o_.localization.datetime = Object.assign(_o_.utility.ifNull(_o_.localization.datetime, {}), {
+        _o_.localization.datetime = _o_.utility.extend(_o_.utility.ifNull(_o_.localization.datetime, {}), {
             'EN-US': {
                 localizationName: 'English US',
                 translator: 'Fadhly Permata',
@@ -43,7 +43,7 @@
         // EOF: LOCALIZATION
 
         // BOF: HELPER
-        _o_.string = Object.assign(_o_.utility.ifNull(_o_.string, {}), {
+        _o_.string = _o_.utility.extend(_o_.utility.ifNull(_o_.string, {}), {
             padLeft: function (str, len, char) {
                 len = _o_.utility.ifNull(len, 0x1);
                 char = _o_.utility.ifNull(char, ' ');
@@ -58,7 +58,7 @@
             }
         });
 
-        _o_.number = Object.assign(_o_.number ? _o_.number : {}, {
+        _o_.number = _o_.utility.extend(_o_.number ? _o_.number : {}, {
             zeroPad: function (numb, lenOfNumber) {
                 return _o_.compare.isNullOrEmpty(numb) ?
                     0 :
@@ -71,7 +71,7 @@
         });
         // EOF: HELPER
 
-        _o_.datetime = Object.assign(_o_.utility.ifNull(_o_.datetime, {}), {
+        _o_.datetime = _o_.utility.extend(_o_.utility.ifNull(_o_.datetime, {}), {
             version: version,
             localization: 'EN-US',
             isLeapYear: function (year) {
