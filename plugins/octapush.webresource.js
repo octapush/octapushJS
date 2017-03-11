@@ -12,6 +12,7 @@
  */
 (function (w) {
     'use strict';
+    
     if (!w._o_) {
         console.log('octapushJS.webResource has dependency with "octapush.js". Please add the file first.');
         return;
