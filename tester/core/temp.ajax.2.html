@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<title>octapush - WRLoader</title>
+	<script src="../../octapush.js"></script>
+	<script type="text/javascript">
+		(function () {
+			// _o_.ajax.request(
+			// 	{
+            //         url: 'https://reqres.in/api/users',
+            //         //data: params.data || null,
+            //         method: 'GET',
+            //         success: function(xhr) {
+            //             r = JSON.parse(xhr.responseText);
+			// 			console.log(r);
+			// 		},
+            //         error: function(xhr) {
+			// 			console.log(xhr);
+			// 		},
+            //         // headers: {
+            //         //     'Content-Type': 'application/json',
+            //         //     'X-Requested-With': 'XMLHttpRequest'
+            //         // }
+            //     }
+			// );
+
+			// _o_.ajax.request(
+			// 	{
+            //         url: 'http://html5rocks-cors.s3-website-us-east-1.amazonaws.com/index.html',
+            //         //data: params.data || null,
+            //         method: 'GET',
+            //         //async: _o_.utility.ifNull(params.async, false),
+            //         //username: params.username || null,
+            //         //password: params.password || null,
+            //         success: function(xhr) {
+			// 			console.log(xhr.responseText);
+			// 		},
+            //         error: function(xhr) {
+			// 			console.log(xhr);
+			// 		},
+            //         // headers: _o_.utility.ifNull(params.headers, {
+            //         //     'Content-Type': 'application/x-www-form-urlencoded',
+            //         //     'X-Requested-With': 'XMLHttpRequest'
+            //         // }),
+            //         dataType: 'text'
+            //     }
+			// );
+
+            _o_.ajax.get('https://reqres.in/api/users', function(xhr) {
+                console.log(xhr.responseText);
+            });
+		})();
+	</script>
+</head>
+
+<body>
+</body>
+
+</html>

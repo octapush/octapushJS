@@ -29,7 +29,7 @@
             \<li\><a data-method="_o_.compare.isFloat"\>isFloat()\<a\>\</li\>
             \<li\><a data-method="_o_.compare.isFunction"\>isFunction()\<a\>\</li\>
             \<li\><a data-method="_o_.compare.isInteger"\>isInteger()\<a\>\</li\>
-            \<li\><a data-method="_o_.compare.isJsonObject"\>isJsonObject()\<a\>\</li\>
+            \<li\><a data-method="_o_.compare.isObject"\>isObject()\<a\>\</li\>
             \<li\><a data-method="_o_.compare.isNan"\>isNan()\<a\>\</li\>
             \<li\><a data-method="_o_.compare.isNullOrEmpty"\>isNullOrEmpty()\<a\>\</li\>
             \<li\><a data-method="_o_.compare.isNumber"\>isNumber()\<a\>\</li\>

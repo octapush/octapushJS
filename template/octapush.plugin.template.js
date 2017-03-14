@@ -13,13 +13,13 @@
 (function (w) {
     'use strict';
     if (!window.octapushJS || !window._o_) {
-        alert('octapushJS.pluginName has dependency with "octapush.js". Please add the file first.');
+        console.log('octapushJS.pluginName has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
         const version = '1.7.02.11';
 
-        _o_.pluginName = Object.assign(_o_.utility.ifNull(_o_.pluginName, {}), {
+        _o_.pluginName = _o_.utility.extend(_o_.utility.ifNull(_o_.pluginName, {}), {
             version: version
             /**
              * Write your code here using JSON style.
