@@ -113,7 +113,7 @@
              * @param {any} obj
              * @returns {bool} return FALSE if the `obj` is NUMBER. Otherwise is TRUE.
              */
-            isNan: function (obj) {
+            isNaN: function (obj) {
                 return isNaN(obj);
             },
             /**

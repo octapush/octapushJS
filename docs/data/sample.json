@@ -1,0 +1,38 @@
+{
+    "authors": {
+        "prime": {
+            "name":"AuthorName",
+            "email":"authorEmail",
+            "url":"authorUrl"
+        },
+        "editors": [
+            [
+                "If you want to edit this document, follow below instruction:",
+                "1. Create a new <item> (or replace this <item> if you are the first editor)",
+                "   and replace the value inside it as defined on instruction #2.",
+                "2. Copy and paste structure inside authors -> prime inside your <item>."
+            ]
+        ]
+    },
+
+    "namespace": "octapushJS or _o_",
+    "methodName": "methodName",
+    "description": "description goes here.",
+    "parameters": [
+        {
+            "type":"parameter data type",
+            "name":"parameter name",
+            "description":"parameter description"
+        }
+    ],
+    "return": {
+        "type": "return data type",
+        "description": "return description"
+    },
+    "samples": [
+        {
+            "description": "sample description goes here.",
+            "code": "sample code"
+        }
+    ]
+}

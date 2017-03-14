@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <octapushJSDocumentation>
     <authors>
         <prime>
@@ -9,10 +10,10 @@
         <editors>
             <item>
                 If you want to edit this document, follow below instruction:
-                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
                     and replace the value inside it as defined on instruction #2.
-                2. Copy and paste structure inside authors -> prime inside your \<item\>.
-            <item>
+                2. Copy and paste structure inside authors -&gt; prime inside your &lt;item&gt;.
+            </item>
         </editors>
     </authors>
 
@@ -20,8 +21,8 @@
     <methodName>version</methodName>
     <description>
         Get octapushJS core version.
-        \<strong\>Note :\</strong\>;
-        Since this is not a method, do not call \<i\>version\</i\>; property using \<i\>open-close\</i/> bracket "()".
+        &lt;strong&gt;Note :&lt;/strong&gt;;
+        Since this is not a method, do not call &lt;i&gt;version&lt;/i&gt;; property using &lt;i&gt;open-close&lt;/i/&gt; bracket "()".
         See the sample for more detail.
     </description>
     <parameters></parameters>

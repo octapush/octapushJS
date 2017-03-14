@@ -1,0 +1,148 @@
+<html>
+    <head>
+    <meta charset="utf-8"/>
+
+        <title>octapush</title>
+        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet"/>
+        <script src="assets/Jquery/jquery-2.2.3.min.js"></script>
+        <script src="../octapush.js"></script>
+        <script src="../plugins/octapush.array.js"></script>
+        <script src="../plugins/octapush.datetime.js"></script>
+        <script src="../plugins/octapush.number.js"></script>
+        <script src="../plugins/octapush.string.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.js"></script>        
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <!-- <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                        </div>
+                    </div> -->
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                        <div class="body">
+                            <ul id="sideMenu" class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne">
+                          <h4 class="panel-title">
+                            <div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                              Collapsible Group Item #1
+                            </div>
+                          </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                          <div class="panel-body" style="padding: 0px">
+                            <ul class="list-group">
+                              <li class="list-group-item">Cras justo odio</li>
+                              <li class="list-group-item">Dapibus ac facilisis in</li>
+                              <li class="list-group-item">Morbi leo risus</li>
+                              <li class="list-group-item">Porta ac consectetur ac</li>
+                              <li class="list-group-item">Vestibulum at eros</li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                      <div class="panel panel-default">
+                        <div class="panel-heading" role="tab" id="headingOne1">
+                          <h4 class="panel-title">
+                            <div role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne1" aria-expanded="true" aria-controls="collapseOne1">
+                              Collapsible Group Item #1
+                            </adiv>
+                          </h4>
+                        </div>
+                        <div id="collapseOne1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne1">
+                          <div class="panel-body">
+                            TEST 2
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(function(){
+                function buildMenus(obj, parent) {
+                    var str = '';
+                    var i=0;
+                    _o_.utility.each(obj, function(key, val) {
+                        console.log(key);
+                        if(key=="localization")return;
+                        if (!_o_.compare.isJsonObject(val)) {
+                            str += _o_.string.concat(
+                                '<li class="list-group-item">',
+                                _o_.string.format('<a data-link="{1}.{2}.xml">', parent, key),
+                                key,
+                                '</a>',
+                                '</li>'
+                            );
+                        } else {
+                            str += '<ul class="list-group"><li class="list-group-item">' + key + '<ul>';
+                            str += buildMenus(val, _o_.string.template('{{parent}}.{{key}}', {parent: parent, key: key}));
+                            str += '</ul></li></ul>';
+                        }
+                        i++;
+                    })
+
+                    return str;
+                }
+
+                $('ul#sideMenu').html(buildMenus(_o_, '_o_'));
+
+
+               
+                //SETUP AJAX
+                // $.ajax({
+                //     contentType: 'application/json; charset=UTF-8',
+                //     url:'data/sample.json',
+                //     dataType: 'TEXT',
+                //     success: function(r){
+                //         r = JSON.parse(r);
+                //         r = _o_.string.concat(r.ADAM, '\n');
+                //         r = _o_.string.replaces(r, ['a', 'q', 'x'], ['t', 'u', 'i']);
+                //         console.log(r);
+                //     }
+                // });
+            });
+        </script>
+    </body>
+</html>
+
+
+<!-- var str = '';
+                    var i=0;
+                    _o_.utility.each(obj, function(key, val) {
+                        if (!_o_.compare.isJsonObject(val)) {
+                            str += _o_.string.concat(
+                                '<li class="list-group-item">',
+                                _o_.string.format('<a data-link="{1}.{2}.xml">', parent, key),
+                                key,
+                                '</a>',
+                                '</li>'
+                            );
+                        } else {
+                            str += '<li id="collapse_'+i+'" data-toggle="collapse" data-parent="#accordion" href="#collapse_'+i+'" aria-expanded="true" aria-controls="collapseOne">' + key + '<ul id=""#collapse_'+i+'" class="collapse show" role="tabpanel" aria-labelledby="headingOne">';
+                            str += buildMenus(val, _o_.string.template('{{parent}}.{{key}}', {parent: parent, key: key}));
+                            str += '</ul></li>';
+                        }
+                        i++;
+                    })
+
+                    return str; -->
