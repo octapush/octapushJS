@@ -1,32 +1,75 @@
 # octapushJS
-sDengan meningkat pesatnya teknologi yang terjadi belakangan ini, mengakibatkan semakin rumit & kompleksnya pekerjaan yang harus dilakukan oleh seorang programmer.
+octapushJS adalah framework javascript yang dibangun untuk mempermudah Anda dalam menangani berbagai macam kebutuhan dalam membangun sebuah aplikasi. Tidak seperti kebanyakan framework javascript lainnya (sebagai contoh, underscore, stringjs, momentjs, dll) yang dibangun secara spesifik untuk menangani sebuah tipe data saja. octapushJS dibangun dengan berbagai macam kemampuan, namun tetap memperhatikan aspek ringan, cepat, dan efektif.
 
-octapushJS adalah sebuah framework yang wajib dimiliki oleh seorang programmer berbasis JavaScript. Karna, octapushJS didesain khusus untuk mempermudah programmer JavaScript untuk menangani berbagai macam kebutuhan yang umumnya terjadi.
-
-Dibangun dengan menggunakan konsep dukungan _plugin_, sehingga hanya memiliki ukuran yang sangat minim.
-
-octapushJS adalah sekumpulan library JavaScript yang didesain untuk mempermudah programmer untuk merancang aplikasi berbasis JavaScript. octapushJS didesain dengan sejumlah handler untuk menangani berbagai type data yang didukung oleh JavaScript seperti yang tertera pada bagian fitur
-
-Walau memiliki kemampuan yang sangat lengkap, namun octapushJS tetap memiliki ukuran file yang sangat minimal. Karna octapushJS dibangun dengan menggunakan konsep plugin, sehingga Anda hanya perlu memanggil script-script yang dibutuhkan saja. 
 
 # Fitur
+octapushJS dibangun dengan modul terpisah untuk setiap kebutuhan spesifik dengan sistem plugin. Sehingga Anda hanya perlu memuat modul yang dibutuhkan saja. Karna bersifat plugin, proses pemuatan modul-modul tersebut pun sudah didesain dengan mudah dan efisien.
 
-**1. AJAX**
+Modul-modul yang didukung oleh octapushJS diantaranya adalah: **ajax, utility, compare, string, datetime, number,**  dan **array.**
 
-**2. Utility :**
+# How To Use
+Seperti framework javascript lainnya (misal jQuery dengan karakter dollar ($), underscores dengan karakter underscore, dsb), instansi octapushJS dikonstruksi dengan menggunakan karakter omega **(*_o*_)**.
 
-**3. Compare :**
+Untuk memulai menggunakan octapushJS, pertama Anda kloning paket lengkap framework octapushJS [disini](https://github.com/octapush/octapushJS/), dan lampirkan file octapush.js kedalam dokumen HTML anda seperti berikut:
 
-**4. String :**
+```
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>octapushJS Base Sample</title>
+        <script type="text/javascript" src="../../octapush.js"></script>
+    </head>
+    <body>
+        Hello World
+    </body>
+</html>
+``` 
 
-**5. Datetime :**
+# Simple Demo
 
-**6. Number :**
+**String :**
 
-**7. Array :**
+Demo with **unloaded** string-module:
+```
+_o_.utility.importPlugin('string', function() {
+    var greeting = 'Hi, my name is {{name}}, I am from {{nationality}}. How about you?'
+    var data = {
+        name: 'Fadhly Permata',
+        nationality: 'Indonesia'
+    };
 
-# Contoh Penggunaan
-Sebagai contoh, apabila Anda hanya memerlukan kemampuan pengolahan `string` saja, maka Anda cukup memanggil file `octapush.js` dan `octapush.string.js` saja.
+    alert(_o_.string.template(greeting, data));    
+});
+```
+
+Demo with **loaded** string-module:
+```
+var greeting = 'Hi, my name is {{name}, I am from {{nationality}. How about you?'
+var data = {
+    name: 'Fadhly Permata',
+    nationality: 'Indonesia'
+};
+
+alert(_o_.string.template(greeting, data));
+```
+
+
+**Datetime**
+
+Demo with **unloaded** datetime-module:
+```
+_o_.utility.importPlugin(['datetime', 'string'], function() {
+    var greeting = 'Hi, my name is {{name}}, I am born at {{dob}}. How about you?'
+    var data = {
+        name: 'Fadhly Permata',
+        
+        // datetime-module sample implement
+        dob: _o_.datetime.format('1985-05-13', 'mmmm dd, yyyy')
+    };
+
+    alert(_o_.string.template(greeting, data));
+});
+```
 
 # Documentation
-Anda dapat melihat dokumentasi lengkap octapushJS [disini](https://github.com/octapush/octapushJS/wiki).
+Anda dapat melihat dokumentasi lengkap octapushJS [disini](http://octapushjs.hol.es).
