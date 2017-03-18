@@ -12,12 +12,12 @@
  */
 (function (w) {
     'use strict';
-    if (!w.octapushJS || !w._o_) {
+    if (!w._o_) {
         console.log('octapushJS.localization.datetime has dependency with "octapush.js". Please add the file first.');
         return;
 
     } else {
-        _o_.localization.datetime = Object.assign(_o_.utility.ifNull(_o_.localization.datetime, {}), {
+        _o_.localization.datetime = _o_.utility.extend(_o_.utility.ifNull(_o_.localization.datetime, {}), {
             'IDN': {
                 localizationName: 'Indonesia',
                 translator: 'Fadhly Permata',

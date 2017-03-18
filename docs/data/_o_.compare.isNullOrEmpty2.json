@@ -1,0 +1,20 @@
+{
+    "octapushJSDocumentation": {
+        "author": [
+            {"prime": [
+                    {"name":"FADHLY PERMATA & ADAM GANTEN"},
+                    {"email":"FADHLY PERMATA & ADAM GANTEN"},
+                    {"url":"FADHLY PERMATA & ADAM GANTEN"},
+                ],
+             "editors": [
+                    {"item":[
+                            "If you want to edit this document, follow below instruction:",
+                            "1. Create a new \"<item\"> (or replace this \"<item\"> if you are the first editor) and replace the value inside it as defined on instruction #2",
+                            "2. Copy and paste structure inside authors -> prime inside your \"<item\">."
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,26 @@
+{
+    "octapushJSDocumentation": {
+        "author": {
+            "prime":[{"name":"ADAM","email":"email@octapush.com","url":"octapush.com"}],
+            "editor":[
+                {"items":"If you want to edit this document, follow below instruction : 1. Create a new <code> (or replace this </code> if you are the first editor) and replace the value inside it as defined on instruction #2. 2. Copy and paste structure inside authors -> prime inside your \"<item\">."}
+            ]
+        },
+        "namespace":{"content":"<code> octapushJS.compare or _o_.compare </code>"},
+        "methodName":"<code> octapushJS.compare or _o_.compare </code>",
+        "description":["Check the `obj` is having properties or not."],
+        "parameters":"parameters",
+        "return":"return",
+        "samples":[
+            "<ol><li class='L1'>var initDrag = function (el) {</li>",
+            "<li class='L2'>// create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/) </li>",
+            "<li class='L3'>// it doesn't need to have a start or end </li>",
+            "<li class='L4'>var eventObject = { </li>",
+            "<li class='L5'>title: $.trim(el.text()) // use the element's text as the event title </li>",
+            "<li class='L6>};</li>",
+            "<li class='L7'>// store the Event Object in the DOM element so we can get to it later </li>",
+            "<li class='L8'>el.data('eventObject', eventObject); </li>",
+            "<li class='L9'>// make the event draggable using jQuery UI </li></ol>"
+        ]
+    }
+}

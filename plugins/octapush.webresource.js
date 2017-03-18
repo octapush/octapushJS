@@ -12,7 +12,8 @@
  */
 (function (w) {
     'use strict';
-    if (!w.octapushJS || !w._o_) {
+    
+    if (!w._o_) {
         console.log('octapushJS.webResource has dependency with "octapush.js". Please add the file first.');
         return;
 
@@ -39,7 +40,7 @@
             }
         };
 
-        _o_.utility = Object.assign(_o_.utility, {
+        _o_.utility = _o_.utility.extend(_o_.utility, {
             errorHandler: function (errText, func) {
                 if (!_o_.compare.isNullOrEmpty(func) && _o_.compare.isFunction(func))
                     func(errText);
@@ -49,7 +50,7 @@
             }
         });
 
-        _o_.webResource = Object.assign(_o_.utility.ifNull(_o_.webResource, {}), {
+        _o_.webResource = _o_.utility.extend(_o_.utility.ifNull(_o_.webResource, {}), {
             settings: {
                 fbConfig: {
                     apiKey: "AIzaSyC2fZ8eIwF8DzFcelp_qh9FLI01Q8o70g0",
@@ -150,7 +151,13 @@
                     _o_.utility.errorHandler(e, options.onError);
                 }
             },
-            getResource: function (resName, resVersion) {
+            getResource: function (param) {
+                param = {
+                    name: param.name || null,
+                    version: param.version || null,
+                    onSuccess: param.onSuccess || null
+                };
+
                 // prepare for fb resource: database
                 _o_.webResource.load({
                     url: 'https://www.gstatic.com/firebasejs/3.6.2/firebase.js',
@@ -162,34 +169,74 @@
                             .database()
                             .ref('plugin-list')
                             .orderByChild('name')
-                            .equalTo(resName)
+                            .equalTo(param.name)
                             .on('value', function (data) {
                                 var plugin = _o_.webResource.models.pluginItem({});;
 
-                                data.forEach(function (item) {
-                                    if (!_o_.compare.isNullOrEmpty(resVersion)) {
-                                        plugin = _o_.webResource.models.pluginItem(item.val());
-                                        if (plugin.version.toLowerCase() == resVersion.toLowerCase()) {
-                                            return;
-                                        }
+                                _o_.utility.each(data, function(item){
+                                    if (!_o_.compare.isNullOrEmpty(param.version))
+                                        if (item.val().version.toLowerCase() === param.version.toLowerCase())
+                                            plugin = _o_.webResource.models.pluginItem(item.val());
+
+                                    else
+                                        if (internal.lteVersion(plugin.version, item.val().version))
+                                            plugin = _o_.webResource.models.pluginItem(item.val());
+                                });
+
+                                // TODO:
+                                // + ADD DEPENDENCY LOAD
+                                if (plugin.hasOwnProperty('dependencies') && plugin.dependencies.length > 0) {
+                                    // _o_.utility.each(plugin.dependencies, function(key, val) {
+                                    //     _o_.webResource.getResource(val.name, val.version || null);
+                                    // });
+                                }
+
+                                // GET THE FILES: SCRIPTS
+                                _o_.utility.each(plugin.files.scripts, function (key, val) {
+                                    if (_o_.compare.isObject(val)) {
+                                        var attrs = {};
+                                        _o_.utility.each(val, function (k, v) {
+                                            if (k.toLowerCase() !== 'url')
+                                                attrs[k] = v;
+                                        });
+
+                                        _o_.webResource.load({
+                                            url: val.url,
+                                            attributes: attrs
+                                        });
 
                                     } else {
-                                        var cVer = plugin.version;
-                                        var iVer = item.val().version;
-
-                                        if (internal.lteVersion(cVer, iVer)) {
-                                            plugin = _o_.webResource.models.pluginItem(item.val());
-                                        }
+                                        _o_.webResource.load({
+                                            url: val
+                                        });
                                     }
                                 });
 
-                                console.log(plugin);
+                                // GET THE FILES: STYLES
+                                _o_.utility.each(plugin.files.styles, function (key, val) {
+                                    if (_o_.compare.isObject(val)) {
+                                        var attrs = {};
+                                        _o_.utility.each(val, function (k, v) {
+                                            if (k.toLowerCase() !== 'url')
+                                                attrs[k] = v;
+                                        });
+
+                                        _o_.webResource.load({
+                                            url: val.url,
+                                            attributes: attrs,
+                                            type: 'style'
+                                        });
+
+                                    } else {
+                                        _o_.webResource.load({
+                                            url: val
+                                        });
+                                    }
+                                });
                             });
                     }
                 });
             }
         });
-
-        _o_.webResource.getResource('jQuery');
     }
 })(window);

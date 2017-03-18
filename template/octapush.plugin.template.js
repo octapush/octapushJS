@@ -19,7 +19,7 @@
     } else {
         const version = '1.7.02.11';
 
-        _o_.pluginName = Object.assign(_o_.utility.ifNull(_o_.pluginName, {}), {
+        _o_.pluginName = _o_.utility.extend(_o_.utility.ifNull(_o_.pluginName, {}), {
             version: version
             /**
              * Write your code here using JSON style.
