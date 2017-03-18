@@ -3,10 +3,8 @@
  Author  : Fadhly Permata
  eMail   : fadhly.permata@gmail.com
  URL     : www.octapush.com
-
  === Credits ===
  Prime Developer : Fadhly Permata
-
  === Contributors ===
  ... just type your name here after editing the script ...
  */
