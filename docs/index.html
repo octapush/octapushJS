@@ -1,199 +1,96 @@
 <html>
-    <head>
-    <meta charset="utf-8"/>
 
-        <title>octapush</title>
-        <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet"/>
-        <link href="assets/style/docs.css" rel="stylesheet"/>
-        <script src="assets/Jquery/jquery-2.2.3.min.js"></script>
-        <script src="../octapush.js"></script>
-        <script src="../plugins/octapush.array.js"></script>
-        <script src="../plugins/octapush.datetime.js"></script>
-        <script src="../plugins/octapush.number.js"></script>
-        <script src="../plugins/octapush.string.js"></script>
-        <script src="assets/bootstrap/js/bootstrap.js"></script>        
-    </head>
-    <style type="text/css">
-        body{
-            margin-top: 50px;
-        }
-        li.parent{
-            padding: 0px !important;
-        }
+<head>
+    <meta charset="utf-8" />
 
-        .parent>a.treeview{
-            position: relative;
-            display: block;
-            padding: 10px 15px;
-            margin-bottom: -1px;
-            background-color: #fff;
-        }
-        a.treeview{
-            background-color: #f9f9f9 !important;
-        }
-        ul.menu-treeview{
-            padding: 0;
-        }
-        ul.menu-treeview li.child{
-            border-left: none;
-            border-right: none
-        }
-        ul.menu-treeview > li.child:first-child{
-            border-top:solid 1px #ddd;
-            border-top-left-radius: none !important;
-            border-top-right-radius: none !important;
-        }
-        ul.menu-treeview > li.child:last-child{
-            border-bottom:none;
-        }
-        ul.list-group > li.parent:last-child{
-            border-bottom-left-radius: 4px !important;
-            border-bottom-right-radius: 4px !important;
-        }
-    </style>
-    <body>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-                        <div class="body">
-                            <ul id="sideMenu" class="list-group">
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-9">
-                    <div class="span12">
-                        <div class="page-header">
-                            
-                        </div>
-                    </div>
-                    <div class="span12">
-                        <code class="language-js" id="code">
-                        
-                        </code>
-                    </div>
-                    <div class="span12">
-                        <h3>Description</h3>
-                        <div id="description"></div>
-                    </div>
-                    <div class="span12">
-                        <h3>Method Name</h3>
-                        <div id="methodname"></div>
+    <title>octapush</title>
+    <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
+    <link href="assets/style/docs.css" rel="stylesheet" />
+</head>
+<style type="text/css">
+    body {
+        margin-top: 50px;
+    }
+    
+    li.parent {
+        padding: 0px !important;
+    }
+    
+    .parent>a.treeview {
+        position: relative;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+        background-color: #fff;
+    }
+    
+    a.treeview {
+        background-color: #f9f9f9 !important;
+    }
+    
+    ul.menu-treeview {
+        padding: 0;
+    }
+    
+    ul.menu-treeview li.child {
+        border-left: none;
+        border-right: none
+    }
+    
+    ul.menu-treeview>li.child:first-child {
+        border-top: solid 1px #ddd;
+        border-top-left-radius: none !important;
+        border-top-right-radius: none !important;
+    }
+    
+    ul.menu-treeview>li.child:last-child {
+        border-bottom: none;
+    }
+    
+    ul.list-group>li.parent:last-child {
+        border-bottom-left-radius: 4px !important;
+        border-bottom-right-radius: 4px !important;
+    }
+</style>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                    <div class="body">
+                        <ul id="sideMenu" class="list-group">
+                        </ul>
                     </div>
                 </div>
             </div>
+            <div class="col-md-9">
+                <div class="span12">
+                    <div class="page-header">
+
+                    </div>
+                </div>
+                <div class="span12">
+                    <code class="language-js" id="code">
+                        
+                        </code>
+                </div>
+                <div class="span12">
+                    <h3>Description</h3>
+                    <div id="description"></div>
+                </div>
+                <div class="span12">
+                    <h3>Method Name</h3>
+                    <div id="methodname"></div>
+                </div>
+            </div>
         </div>
-        <script>
-            $(function(){
+    </div>
 
-                function buildMenus(obj, parent) {
-                    var str = '';
-                    var i=0;
-                    _o_.utility.each(obj, function(key, val) {
-                        var css = "list-group-item";
+    <script src="assets/Jquery/jquery-2.2.3.min.js"></script>
+    <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <script src="../octapush.js"></script>
+    <script src="app.js"></script>
+</body>
 
-                        if(key=="version")css='list-group-item';
-                        if(key=="copyleft")css='list-group-item';
-                        if(key=="showCopyleft")css='list-group-item';
-
-                        if(key=="localization")return;
-                        if (!_o_.compare.isJsonObject(val)) {
-                            str += _o_.string.concat(
-                                '<li class="'+css+' child" data-menu="menu-child">',
-                                _o_.string.format('<a href="#" data-link="{1}.{2}.json">', parent, key),
-                                key,
-                                '</a>',
-                                '</li>'
-                            );
-                        } 
-                        else {
-                            str += '<li class="list-group-item parent">';
-                            str += '<a href="#" class="treeview">'+key+'</a>';
-                            str += '<ul style="display:none" class="menu-treeview" data-bind="collapse_'+key+'">';
-                            str += buildMenus(val, _o_.string.template('{{parent}}.{{key}}', {parent: parent, key: key}));
-                            str += '</ul>';
-                            str += '</li>';
-                        }
-                        i++;
-                    })
-
-                    return str;
-                }
-
-                $('ul#sideMenu').html(buildMenus(_o_, '_o_'));
-                var parents = $('a.treeview');
-                var child = $('ul.menu-treeview');
-
-                parents.unbind().bind('click',function(e){
-                    e.preventDefault();
-                    var that = $(this);
-                    var keyText = that.text();
-                        $('ul.menu-treeview[data-bind="collapse_'+keyText+'"]').toggle('slow');
-                });
-               
-               var link = $('a[data-link]');
-                   link.unbind().bind('click',function(){
-                        var that = $(this);
-                        var aText = that.attr('data-link');
-                        if(aText!=null || aText!=""){
-                            $.ajax({
-                                url:'data/'+aText,
-                                dataType:'JSON',
-                                success: function(r){
-                                    if(!r)return;
-                                    var author=[];
-                                    var samples = [];
-                                    var description = [];
-                                    var methodname = [];
-                                    $.each(r,function(key,val){
-                                        author.push(val.author);
-                                        samples.push(val.samples);
-                                        description.push(val.description);
-                                    })
-                                    
-                                    $.each(author,function(key,val){
-                                        $('div.page-header').html('');
-                                        $('div.page-header').html(val.editor[0].items);
-                                    })                                    
-
-                                    $.each(samples,function(key,val){
-                                        console.log(val.join(""));
-                                        $('#code').html('');
-                                        $('#code').html(_o_.string.concat(val));
-                                    }) 
-
-                                    _o_.utility.each(description,function(key,val){
-                                        $('#description').html('');
-                                        $('#description').html(val.content);
-                                    })
-
-                                     _o_.utility.each(methodname,function(key,val){
-                                        $('#methodname').html('');
-                                        //$('#description').html(val.content);
-                                        $('#description').html(_o_.string.concat(val));
-                                    })
-                                },
-                                error: function(e){
-
-                                }
-                            });
-                        }
-                   });
-            });
-            // $(function() {
-            //     $.ajax({
-            //             url:'data/sample.json',
-            //             dataType:'JSON',
-            //             success: function(r){
-            //                 //console.log(JSON.parse(r));
-            //                 console.log(r);
-            //             },
-            //             error: function(e){
-            //                 console.log(e);
-            //             }
-            //         });
-            // })
-        </script>
-    </body>
 </html>
