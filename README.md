@@ -1,7 +1,7 @@
 # octapushJS
 `octapushJS` is a javascript framework that is built for your convenience in handling a wide variety of needs in building an application. Unlike most another javascript framework (for example, underscore, stringjs, momentjs, etc.) are built specifically to handle one data type only. `octapushJS` built with a variety of abilities, but lightweight, fast, and effective.
 
-# Fitur
+# Features
 `octapushJS` built with separate modules for each specific need by using a _plugin_ system. So you just need to load the needed modules only. Since supporting **plugin concept**, the process of loading modules has been designed to easily and efficiently.
 
 Supported modules by `octapushJS` are: **ajax, utility, compare, string, datetime, number,**  dan **array.**
