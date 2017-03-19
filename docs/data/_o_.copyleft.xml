@@ -9,9 +9,9 @@
         <editors>
             <item>
                 If you want to edit this document, follow below instruction:
-                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
                    and replace the value inside it as defined on instruction #2.
-                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+                2. Copy and paste structure inside authors -> prime inside your &lt;item&gt;.
             <item>
         </editors>
     </authors>
@@ -37,7 +37,7 @@
         <type>string</type>
         <description>
             Returning string contained octapush string art.
-            \<strong\>Note :\</strong\>
+            &lt;strong&gt;Note :&lt;/strong&gt;
             To make sure the result has properly format, make sure the `char1` and `char2` parameter has equal length.
         </description> 
     </return>

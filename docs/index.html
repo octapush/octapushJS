@@ -6,55 +6,18 @@
     <title>octapush</title>
     <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/style/docs.css" rel="stylesheet" />
+    <link href="assets/app/styles.css" rel="stylesheet" />
 </head>
-<style type="text/css">
-    body {
-        margin-top: 50px;
-    }
-    
-    li.parent {
-        padding: 0px !important;
-    }
-    
-    .parent>a.treeview {
-        position: relative;
-        display: block;
-        padding: 10px 15px;
-        margin-bottom: -1px;
-        background-color: #fff;
-    }
-    
-    a.treeview {
-        background-color: #f9f9f9 !important;
-    }
-    
-    ul.menu-treeview {
-        padding: 0;
-    }
-    
-    ul.menu-treeview li.child {
-        border-left: none;
-        border-right: none
-    }
-    
-    ul.menu-treeview>li.child:first-child {
-        border-top: solid 1px #ddd;
-        border-top-left-radius: none !important;
-        border-top-right-radius: none !important;
-    }
-    
-    ul.menu-treeview>li.child:last-child {
-        border-bottom: none;
-    }
-    
-    ul.list-group>li.parent:last-child {
-        border-bottom-left-radius: 4px !important;
-        border-bottom-right-radius: 4px !important;
-    }
-</style>
 
 <body>
     <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 style="font-weight: bold !important; margin-top: -40px !important;">
+                    octapushJS Documentation
+                </h1>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-3">
                 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -64,33 +27,51 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-9">
-                <div class="span12">
-                    <div class="page-header">
-
+            <div class="col-md-9" id="document-container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="page-header">
+                            <h2>Page Title</h2>
+                        </div>
                     </div>
                 </div>
-                <div class="span12">
-                    <code class="language-js" id="code">
-                        
-                        </code>
-                </div>
-                <div class="span12">
-                    <h3>Description</h3>
-                    <div id="description"></div>
-                </div>
-                <div class="span12">
-                    <h3>Method Name</h3>
-                    <div id="methodname"></div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs">
+                            <li class="active">
+                                <a href="#tab-document" data-toggle="tab">Document</a>
+                            </li>
+                            <li>
+                                <a href="#tab-authors" data-toggle="tab">Authors</a>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content">
+                            <div class="tab-pane fade active in" id="tab-document">
+                                <p>
+                                    Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater
+                                    eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
+                                </p>
+                            </div>
+                            <div class="tab-pane fade" id="tab-authors">
+                                <p>
+                                    Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo
+                                    enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown.
+                                    Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed
+                                    echo park.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="../octapush.js"></script>
     <script src="assets/Jquery/jquery-2.2.3.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.js"></script>
-    <script src="../octapush.js"></script>
-    <script src="app.js"></script>
+    <script src="assets/app/script.js"></script>
 </body>
 
 </html>
