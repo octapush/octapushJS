@@ -53,6 +53,29 @@
                     }, _o_);
 
                     $('ul#sideMenu').html(octapushDoc.helper.sideMenusGenerator(newO, '_o_'));
+                },
+                page: {
+                    render: function(data) {
+                        octapushDoc.ui.builder.page.author.prime(data.authors.prime);
+                        octapushDoc.ui.builder.page.author.editors(data.authors.editors);
+                    },
+                    author: {
+                        prime: function(data) {
+                            $('div#author-wrapper table > tbody > tr').html(
+                                _o_.string.template('<td>{{name}}</td><td><a href="mailto:{{email}}">{{email}}</a></td><td><a href="{{url}}">{{url}}</a></td>', data)
+                            );
+                        },
+                        editors: function(data) {
+                            console.log(data);
+
+                            if (_o_.compare.isNullOrEmpty(data) || (_o_.compare.isString(data) && _o_.string.left(data, 2).toLowerCase() === 'if'))
+                                $('div#editor-wrapper').hide(0);
+                            else
+                                $('div#editor-wrapper').show(0);
+
+
+                        }
+                    }
                 }
             }
         },
@@ -102,7 +125,11 @@
                                 _o_.ajax.request({
                                     url: _o_.string.format('data/{1}', dataPath),
                                     success: function(xhr) {
-                                        console.log(xhr.responseText);
+                                        var r = $.parseXML(xhr.responseText);
+                                        w.myXml = r;
+
+                                        var xtj = octapushDoc.helper.xmlToJson(r.children[0].children);
+                                        octapushDoc.ui.builder.page.render(xtj);
                                     }
                                 });
                             })();
@@ -190,6 +217,20 @@
                 });
 
                 return str;
+            },
+            xmlToJson: function(xmlRoot) {
+                var result = {};
+
+                _o_.utility.forEach(xmlRoot, function(key, val) {
+                    if (_o_.compare.isNullOrEmpty(val.localName))
+                        return;
+
+                    result[val.localName] = val.children.length ?
+                        octapushDoc.helper.xmlToJson(val.children) :
+                        result[val.localName] = _o_.string.trim(_o_.string.collapseWhitespace(val.textContent));
+                });
+
+                return result;
             }
         }
     };

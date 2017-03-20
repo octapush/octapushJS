@@ -3,7 +3,7 @@
         <prime>
             <name>Fadhly Permata</name>
             <email>fadh325@yahoo.com</email>
-            <url>www.octapush.com</url>
+            <url>http://www.octapush.com</url>
         </prime>
 
         <editors>
@@ -12,7 +12,7 @@
                 1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
                    and replace the value inside it as defined on instruction #2.
                 2. Copy and paste structure inside authors -> prime inside your &lt;item&gt;.
-            <item>
+            </item>
         </editors>
     </authors>
 
