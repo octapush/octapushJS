@@ -1,4 +1,4 @@
-(function(w, d) {
+(function (w, d) {
     'use strict';
 
     var settings = {
@@ -27,21 +27,21 @@
     };
 
     w.octapushDoc = {
-        register: function() {
-            octapushDoc.helper.loadPlugins(function() {
+        register: function () {
+            octapushDoc.helper.loadPlugins(function () {
                 octapushDoc.ui.register.apply();
                 octapushDoc.events.register.apply();
             })
         },
         ui: {
-            register: function() {
+            register: function () {
                 octapushDoc.ui.builder.register.apply();
             },
             builder: {
-                register: function() {
+                register: function () {
                     octapushDoc.ui.builder.sideMenus();
                 },
-                sideMenus: function() {
+                sideMenus: function () {
                     octapushDoc.helper.sortMenuList();
 
                     var newO = Object.assign({
@@ -55,51 +55,58 @@
                     $('ul#sideMenu').html(octapushDoc.helper.sideMenusGenerator(newO, '_o_'));
                 },
                 page: {
-                    render: function(data) {
+                    render: function (data) {
+                        if (_o_.compare.isNullOrEmpty(data))
+                            return;
+
+                        data = octapushDoc.helper.parseMyBadObject(data.octapushJSDocumentation);
+
                         octapushDoc.ui.builder.page.author.prime(data.authors.prime);
                         octapushDoc.ui.builder.page.author.editors(data.authors.editors);
                     },
                     author: {
-                        prime: function(data) {
+                        prime: function (data) {
+                            if (_o_.compare.isNullOrEmpty(data))
+                                return;
+
                             $('div#author-wrapper table > tbody > tr').html(
                                 _o_.string.template('<td>{{name}}</td><td><a href="mailto:{{email}}">{{email}}</a></td><td><a href="{{url}}">{{url}}</a></td>', data)
                             );
                         },
-                        editors: function(data) {
-                            console.log(data);
+                        editors: function (data) {
+                            if (_o_.compare.isNullOrEmpty(data))
+                                return;
 
-                            if (_o_.compare.isNullOrEmpty(data) || (_o_.compare.isString(data) && _o_.string.left(data, 2).toLowerCase() === 'if'))
+                            if (_o_.compare.isString(data.item[0]))
                                 $('div#editor-wrapper').hide(0);
                             else
                                 $('div#editor-wrapper').show(0);
-
-
                         }
                     }
                 }
             }
         },
         events: {
-            register: function() {
+            register: function () {
                 octapushDoc.events.sideMenus.parent.apply();
                 octapushDoc.events.sideMenus.child.apply();
             },
             window: {
-                onReady: function() {
-                    $(d).ready(function() {
+                onReady: function () {
+                    $(d).ready(function () {
                         octapushDoc.register.apply();
                     });
                 }
             },
             sideMenus: {
-                parent: function() {
+                parent: function () {
                     $('a.treeview')
                         .unbind()
-                        .on('click', function(e) {
+                        .on('click', function (e) {
                             e.preventDefault();
                             var that = $(this);
 
-                            (function() {
+                            (function () {
                                 // collapse other menus
                                 $(_o_.string.format('ul#sideMenu > li:not(:contains({1})) > ul', that.text()))
                                     .css('display', 'none');
@@ -112,23 +119,23 @@
                             })();
                         });
                 },
-                child: function() {
+                child: function () {
                     $('a[data-link]')
                         .unbind()
-                        .on('click', function(e) {
+                        .on('click', function (e) {
                             e.preventDefault();
                             var that = $(this);
 
-                            (function() {
+                            (function () {
                                 var dataPath = that.data('link');
 
                                 _o_.ajax.request({
                                     url: _o_.string.format('data/{1}', dataPath),
-                                    success: function(xhr) {
+                                    success: function (xhr) {
                                         var r = $.parseXML(xhr.responseText);
                                         w.myXml = r;
 
-                                        var xtj = octapushDoc.helper.xmlToJson(r.children[0].children);
+                                        var xtj = octapushDoc.helper.xmlToJson(r);
                                         octapushDoc.ui.builder.page.render(xtj);
                                     }
                                 });
@@ -138,12 +145,12 @@
             }
         },
         helper: {
-            sortObject: function(obj, recursive) {
+            sortObject: function (obj, recursive) {
                 recursive = recursive ? recursive : false;
 
                 var sorted = {};
 
-                Object.keys(obj).sort().forEach(function(key) {
+                Object.keys(obj).sort().forEach(function (key) {
                     sorted[key] = obj[key];
 
                     if (recursive && _o_.compare.isObject(obj[key]))
@@ -152,27 +159,27 @@
 
                 return sorted;
             },
-            sortMenuList: function() {
+            sortMenuList: function () {
                 _o_ = octapushDoc.helper.sortObject(_o_, true);
 
                 var unsorted = {};
-                _o_.utility.forEach(settings.resortedItems, function(key, val) {
+                _o_.utility.forEach(settings.resortedItems, function (key, val) {
                     unsorted[val] = _o_[val];
                     delete _o_[val];
                 });
 
                 _o_ = Object.assign(unsorted, _o_);
             },
-            loadPlugins: function(cb) {
+            loadPlugins: function (cb) {
                 // change octapush plugin url;
                 _o_.settings.pluginsPath = '../plugins/';
                 _o_.utility.importPlugin(settings.plugins, cb);
             },
-            sideMenusGenerator: function(obj, parent) {
+            sideMenusGenerator: function (obj, parent) {
                 var str = '';
                 var i = 0;
 
-                _o_.utility.each(obj, function(key, val) {
+                _o_.utility.each(obj, function (key, val) {
                     var css = 'list-group-item';
 
                     if (settings.directItems.indexOf(key) != -1)
@@ -218,16 +225,59 @@
 
                 return str;
             },
-            xmlToJson: function(xmlRoot) {
+            xmlToJson: function (xml) {
+                // Create the return object
+                var obj = {};
+
+                if (xml.nodeType == 1) { // element
+                    // do attributes
+                    if (xml.attributes.length > 0) {
+                        obj["@attributes"] = {};
+                        for (var j = 0; j < xml.attributes.length; j++) {
+                            var attribute = xml.attributes.item(j);
+                            obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+                        }
+                    }
+
+                } else if (xml.nodeType == 3) { // text
+                    obj = xml.nodeValue;
+                }
+
+                // do children
+                if (xml.hasChildNodes()) {
+                    for (var i = 0; i < xml.childNodes.length; i++) {
+                        var item = xml.childNodes.item(i);
+                        var nodeName = item.nodeName;
+                        if (typeof (obj[nodeName]) == "undefined") {
+                            obj[nodeName] = octapushDoc.helper.xmlToJson(item);
+
+                        } else {
+                            if (typeof (obj[nodeName].push) == "undefined") {
+                                var old = obj[nodeName];
+                                obj[nodeName] = [];
+                                obj[nodeName].push(old);
+                            }
+
+                            obj[nodeName].push(octapushDoc.helper.xmlToJson(item));
+                        }
+                    }
+                }
+                return obj;
+            },
+            parseMyBadObject: function (obj) {
                 var result = {};
 
-                _o_.utility.forEach(xmlRoot, function(key, val) {
-                    if (_o_.compare.isNullOrEmpty(val.localName))
-                        return;
+                _o_.utility.each(obj, function (key, val) {
+                    if (!_o_.string.isEqual(key, '#text')) {
+                        if (_o_.compare.isObject(val) && Object.keys(val).length === 1)
+                            result[key] = _o_.string.trim(_o_.string.collapseWhitespace(val['#text']));
 
-                    result[val.localName] = val.children.length ?
-                        octapushDoc.helper.xmlToJson(val.children) :
-                        result[val.localName] = _o_.string.trim(_o_.string.collapseWhitespace(val.textContent));
+                        else if ((_o_.compare.isObject(val) || _o_.compare.isArray(val)) && Object.keys(val).length > 1)
+                            result[key] = octapushDoc.helper.parseMyBadObject(val);
+
+                        else
+                            result[key] = val;
+                    }
                 });
 
                 return result;

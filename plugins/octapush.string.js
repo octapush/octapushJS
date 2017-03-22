@@ -120,7 +120,7 @@
 
             isEqual: function(str1, str2, caseSensitive) {
                 return _o_.utility.ifNull(caseSensitive, true) ?
-                    str1 === str :
+                    str1 === str2 :
                     _o_.string.toLower(str1) === _o_.string.toLower(str2)
             },
 
