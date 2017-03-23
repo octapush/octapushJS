@@ -6,6 +6,8 @@
     <title>octapushJS Documentation</title>
     <link href="assets/bootstrap/css/bootstrap.css" rel="stylesheet" />
     <link href="assets/style/docs.css" rel="stylesheet" />
+    <link href="assets/highlight/default.min.css" rel="stylesheet" />
+    <link href="assets/highlight/monokai.css" rel="stylesheet" />
     <link href="assets/app/styles.css" rel="stylesheet" />
 </head>
 
@@ -31,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="page-header">
-                            <h2>Page Title</h2>
+                            <h2 data-bind-name="methodName">Page Title</h2>
                         </div>
                     </div>
                 </div>
@@ -48,16 +50,22 @@
 
                         <div class="tab-content">
                             <div class="tab-pane fade active in" id="tab-document">
-                                <p>
-                                    Raw denim you probably haven't heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica. Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater
-                                    eu banh mi, qui irure terry richardson ex squid. Aliquip placeat salvia cillum iphone. Seitan aliquip quis cardigan american apparel, butcher voluptate nisi qui.
-                                </p>
+                                <!--<div>
+                                    <div class="title">
+                                        <h4></h4>
+                                    </div>
+                                    <div class="content">
+                                        <p data-bind-name="description"></p>
+                                    </div>
+                                </div>
+
+                                <div class="h-space"></div>-->
                             </div>
                             <div class="tab-pane fade" id="tab-authors">
                                 <div class="row" id="author-wrapper">
                                     <div class="col-md-12">
                                         <h3>Author</h3>
-                                        <table class="table">
+                                        <table class="table table-bordered table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -78,7 +86,7 @@
                                 <div class="row" id="editor-wrapper">
                                     <div class="col-md-12">
                                         <h3>Editor</h3>
-                                        <table class="table">
+                                        <table class="table table-bordered table-striped table-hover">
                                             <thead>
                                                 <tr>
                                                     <th>Name</th>
@@ -107,6 +115,7 @@
     <script src="../octapush.js"></script>
     <script src="assets/Jquery/jquery-2.2.3.min.js"></script>
     <script src="assets/bootstrap/js/bootstrap.js"></script>
+    <script src="assets/highlight/highlight.min.js"></script>
     <script src="assets/app/script.js"></script>
 </body>
 

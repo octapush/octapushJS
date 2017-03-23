@@ -55,3 +55,16 @@ li.parent {
 li.parent:last-child>a {
     border-bottom: 1px solid #ddd !important;
 }
+
+.h-space {
+    height: 15px !important;
+}
+
+#tab-document>div>div.title>h4 {
+    background: #ddd;
+    padding: 10px;
+}
+
+#tab-document>div>div.content {
+    padding: 10px;
+}
