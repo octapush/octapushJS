@@ -163,8 +163,7 @@
                 return _o_.compare.isDefined(obj) &&
                     (
                         obj instanceof Function ||
-                        _o_.utility.getType(obj) === 'function' ||
-                        obj.__proto__.toString() === 'function () {\n}'
+                        _o_.utility.getType(obj) === 'function'
                     );
             },
             /**
