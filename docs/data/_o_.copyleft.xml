@@ -13,6 +13,7 @@
                    and replace the value inside it as defined on instruction #2.
                 2. Copy and paste structure inside authors -> prime inside your &lt;item&gt;.
             </item>
+            
             <item>
                 of you want to edit this document, follow below instruction:
                 1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
@@ -24,21 +25,25 @@
 
     <namespace>octapushJS or _o_</namespace>
     <methodName>copyleft()</methodName>
+
     <description>
         Generate octapush string art.
     </description>
+    
     <parameters>
         <item>
             <name>char1</name>
             <type>char</type>
             <description>The first character. Default value is space " ".</description>
         </item>
+    
         <item>
             <name>char2</name>
             <type>char</type>
             <description>The second character. Default value is "=".</description> 
         </item>
     </parameters>
+    
     <return>
         <type>string</type>
         <description>
@@ -48,6 +53,7 @@
             To make sure the result has properly format, make sure the `char1` and `char2` parameter has equal length.
         </description> 
     </return>
+    
     <samples>
         <item>
             <description>No Description</description> 
@@ -56,6 +62,7 @@
                 console.log(ocl);
             </code> 
         </item>
+    
         <item>
             <description>No Description</description> 
             <code>
