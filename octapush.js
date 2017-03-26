@@ -174,8 +174,7 @@
              * @returns {bool} return TRUE if the `obj` is a string. Otherwise is FALSE.
              */
             isString: function(obj) {
-                return obj.__proto__ === '[object String]' ||
-                    _o_.utility.getType(obj) === 'string';
+                return _o_.utility.getType(obj) === 'string';
             },
             /**
              * @description Check the `obj` is a boolean or not.

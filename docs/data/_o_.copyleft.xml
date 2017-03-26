@@ -3,51 +3,72 @@
         <prime>
             <name>Fadhly Permata</name>
             <email>fadh325@yahoo.com</email>
-            <url>www.octapush.com</url>
+            <url>http://www.octapush.com</url>
         </prime>
 
         <editors>
             <item>
                 If you want to edit this document, follow below instruction:
-                1. Create a new \<item\> (or replace this \<item\> if you are the first editor)
+                1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
                    and replace the value inside it as defined on instruction #2.
-                2. Copy and paste structure inside authors -> prime inside your \<item\>.
+                2. Copy and paste structure inside authors -> prime inside your &lt;item&gt;.
+            </item>
+            
             <item>
+                of you want to edit this document, follow below instruction:
+                1. Create a new &lt;item&gt; (or replace this &lt;item&gt; if you are the first editor)
+                   and replace the value inside it as defined on instruction #2.
+                2. Copy and paste structure inside authors -> prime inside your &lt;item&gt;.
+            </item>
         </editors>
     </authors>
 
     <namespace>octapushJS or _o_</namespace>
     <methodName>copyleft()</methodName>
+
     <description>
         Generate octapush string art.
     </description>
+    
     <parameters>
         <item>
-            <type>char</type>
             <name>char1</name>
+            <type>char</type>
             <description>The first character. Default value is space " ".</description>
         </item>
+    
         <item>
-            <type>char</type>
             <name>char2</name>
+            <type>char</type>
             <description>The second character. Default value is "=".</description> 
         </item>
     </parameters>
+    
     <return>
         <type>string</type>
         <description>
             Returning string contained octapush string art.
-            \<strong\>Note :\</strong\>
+            &lt;br /&gt;&lt;br /&gt;
+            &lt;strong&gt;Note :&lt;/strong&gt;
             To make sure the result has properly format, make sure the `char1` and `char2` parameter has equal length.
         </description> 
     </return>
+    
     <samples>
         <item>
-            <description></description> 
-            <codes>
+            <description>No Description</description> 
+            <code>
                 var ocl = _o_.copyleft();
                 console.log(ocl);
-            </codes> 
+            </code> 
+        </item>
+    
+        <item>
+            <description>No Description</description> 
+            <code>
+                var ocl = _o_.copyleft();
+                console.log(ocl);
+            </code> 
         </item>
     </samples>    
 </octapushJSDocumentation>
