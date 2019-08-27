@@ -41,7 +41,7 @@
 
     _o_ = {
         settings: {
-            pluginsPath: 'https://raw.githubusercontent.com/octapush/octapushJS/dev/plugins/',
+            pluginsPath: 'https://cdn.jsdelivr.net/gh/octapush/octapushJs/plugins/',
         },
         /**
          * @desc Buffer for localization storage.
